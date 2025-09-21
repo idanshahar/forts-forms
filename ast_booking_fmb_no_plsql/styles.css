@@ -13,6 +13,8 @@
   --info: #17a2b8;
   --background: #ffffff;
   --background-secondary: #f8f9fa;
+  --surface: #ffffff;
+  --surface-hover: #f8f9fa;
   --text-primary: rgba(0, 0, 0, 0.87);
   --text-secondary: rgba(0, 0, 0, 0.60);
   --text-disabled: rgba(0, 0, 0, 0.38);
@@ -39,13 +41,59 @@
   padding: 24px;
 }
 
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+  color: var(--text-primary);
+}
+
+.dashboard-form {
+  width: 100%;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dashboard-label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.dashboard-select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-default);
+  font-size: 16px;
+  background-color: var(--surface);
+  color: var(--text-primary);
+  transition: all 250ms ease;
+  cursor: pointer;
+}
+
+.dashboard-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  outline: none;
+}
+
 .dashboard-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--border-default);
   border-radius: 4px;
+  border: 1px solid var(--border-default);
   font-size: 16px;
-  transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  background-color: var(--surface);
+  color: var(--text-primary);
+  transition: all 250ms ease;
 }
 
 .dashboard-input:focus {
@@ -63,10 +111,11 @@
 .dashboard-btn {
   padding: 8px 16px;
   border-radius: 4px;
+  font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
   border: none;
-  transition: all 0.25s ease;
+  cursor: pointer;
+  transition: all 250ms ease;
 }
 
 .dashboard-btn-primary {
@@ -94,16 +143,15 @@
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
-  background-color: var(--background);
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .dashboard-table th,
 .dashboard-table td {
   padding: 12px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-light);
   text-align: left;
 }
 
@@ -113,17 +161,11 @@
 }
 
 .dashboard-form-group {
-  margin-bottom: 1rem;
-}
-
-.dashboard-form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  margin-bottom: 16px;
 }
 
 .dashboard-header-block {
-  background-color: var(--background);
+  background-color: var(--surface);
   padding: 24px;
   border-radius: 8px;
   margin-bottom: 24px;
@@ -131,7 +173,7 @@
 }
 
 .dashboard-data-block {
-  background-color: var(--background);
+  background-color: var(--surface);
   padding: 24px;
   border-radius: 8px;
   margin-bottom: 24px;
@@ -145,30 +187,29 @@
 }
 
 .dashboard-footer {
-  background-color: var(--background);
+  background-color: var(--surface);
   padding: 24px;
-  margin-top: 2rem;
-  border-top: 1px solid var(--border-default);
+  margin-top: 24px;
+  border-top: 1px solid var(--border-light);
 }
 
-/* Dark theme */
+/* Dark Theme */
 [data-theme="dark"] {
   --background: #1a1a1a;
   --background-secondary: #2d2d2d;
+  --surface: #333333;
+  --surface-hover: #404040;
   --text-primary: rgba(255, 255, 255, 0.87);
   --text-secondary: rgba(255, 255, 255, 0.60);
   --text-disabled: rgba(255, 255, 255, 0.38);
   --border-default: #404040;
-  --border-light: #333333;
+  --border-light: #4d4d4d;
   --border-dark: #666666;
 }
 
 /* RTL Support */
 [dir="rtl"] {
-  text-align: right;
-}
-
-[dir="rtl"] .dashboard-input {
+  direction: rtl;
   text-align: right;
 }
 
@@ -180,13 +221,6 @@
 [dir="rtl"] .dashboard-checkbox {
   margin-right: 0;
   margin-left: 8px;
-}
-
-/* Responsive Grid */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
 }
 
 /* Form Validation States */
@@ -204,19 +238,20 @@
   margin-top: 4px;
 }
 
-/* Media Queries */
+/* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 16px;
-  }
-  
-  .dashboard-header-block,
-  .dashboard-data-block {
-    padding: 16px;
+    grid-template-columns: 1fr;
   }
   
   .dashboard-table {
     display: block;
     overflow-x: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }

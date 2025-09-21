@@ -1,115 +1,141 @@
 // Form Controller Class
 class FormsController {
   constructor() {
-    this.currentBlock = null;
-    this.currentRecord = null;
-    this.queryMode = false;
     this.fields = new Map();
-    this.blocks = new Map();
-    this.lovs = new Map();
-    this.dirtyFields = new Set();
-    
+    this.currentField = null;
+    this.queryMode = false;
+    this.modified = false;
     this.initializeKeyHandlers();
+  }
+
+  initializeField(fieldName, required = false, lovId = null) {
+    const field = {
+      name: fieldName,
+      required: required,
+      value: '',
+      lovId: lovId,
+      valid: true,
+      errorMsg: ''
+    };
+    this.fields.set(fieldName, field);
   }
 
   initializeKeyHandlers() {
     document.addEventListener('keydown', (e) => {
       switch(e.key) {
         case 'Tab':
-          this.handleTabNavigation(e);
+          this.handleTabNavigation(e.shiftKey);
           break;
         case 'Enter':
-          this.handleEnterKey(e);
-          break;
-        case 'ArrowUp':
-        case 'ArrowDown':
-          this.handleRecordNavigation(e);
+          this.handleEnterKey();
           break;
         case 'F7':
-          e.preventDefault();
+          if (e.preventDefault) e.preventDefault();
           this.enterQuery();
           break;
         case 'F8':
-          e.preventDefault();
+          if (e.preventDefault) e.preventDefault();
           this.executeQuery();
           break;
         case 'F10':
-          e.preventDefault();
+          if (e.preventDefault) e.preventDefault();
           this.saveRecord();
+          break;
+        case 'F6':
+          if (e.preventDefault) e.preventDefault();
+          this.clearRecord();
           break;
       }
     });
   }
 
-  registerField(fieldName, element, validation = {}) {
-    this.fields.set(fieldName, {
-      element,
-      validation,
-      value: null,
-      originalValue: null
-    });
-
-    element.addEventListener('change', () => {
-      this.handleFieldChange(fieldName);
-    });
-  }
-
-  registerBlock(blockName, fields) {
-    this.blocks.set(blockName, {
-      fields,
-      currentRecord: 0,
-      records: []
-    });
-  }
-
-  registerLOV(lovName, config) {
-    this.lovs.set(lovName, {
-      query: config.query,
-      returnItems: config.returnItems,
-      displayItems: config.displayItems
-    });
-  }
-
-  async handleFieldChange(fieldName) {
-    const field = this.fields.get(fieldName);
-    const newValue = field.element.value;
+  handleTabNavigation(isShiftKey) {
+    const fields = Array.from(this.fields.keys());
+    const currentIndex = fields.indexOf(this.currentField);
+    let nextIndex;
     
-    if (this.validateField(fieldName, newValue)) {
-      field.value = newValue;
-      this.dirtyFields.add(fieldName);
-      await this.executeTrigger('WHEN_VALIDATE_ITEM', fieldName);
+    if (isShiftKey) {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : fields.length - 1;
+    } else {
+      nextIndex = currentIndex < fields.length - 1 ? currentIndex + 1 : 0;
+    }
+    
+    this.setFocus(fields[nextIndex]);
+  }
+
+  handleEnterKey() {
+    const field = this.fields.get(this.currentField);
+    if (field && field.lovId) {
+      this.showLOV(field.lovId);
+    } else {
+      this.handleTabNavigation(false);
     }
   }
 
-  validateField(fieldName, value) {
+  validateField(fieldName) {
     const field = this.fields.get(fieldName);
-    const validation = field.validation;
+    if (!field) return false;
 
-    if (validation.required && !value) {
-      this.showError(`${fieldName} is required`);
-      return false;
-    }
+    field.valid = true;
+    field.errorMsg = '';
 
-    if (validation.maxLength && value.length > validation.maxLength) {
-      this.showError(`${fieldName} exceeds maximum length of ${validation.maxLength}`);
-      return false;
-    }
-
-    if (validation.pattern && !validation.pattern.test(value)) {
-      this.showError(`${fieldName} has invalid format`);
+    if (field.required && !field.value) {
+      field.valid = false;
+      field.errorMsg = 'Field is required';
       return false;
     }
 
     return true;
   }
 
-  async enterQuery() {
-    this.queryMode = true;
-    this.clearAllFields();
-    await this.executeTrigger('ENTER_QUERY_MODE');
+  validateForm() {
+    let isValid = true;
+    this.fields.forEach((field) => {
+      if (!this.validateField(field.name)) {
+        isValid = false;
+      }
+    });
+    return isValid;
   }
 
-  async executeQuery() {
+  setFieldValue(fieldName, value) {
+    const field = this.fields.get(fieldName);
+    if (field) {
+      field.value = value;
+      this.modified = true;
+      this.validateField(fieldName);
+      this.triggerFieldChange(fieldName);
+    }
+  }
+
+  getFieldValue(fieldName) {
+    const field = this.fields.get(fieldName);
+    return field ? field.value : null;
+  }
+
+  setFocus(fieldName) {
+    this.currentField = fieldName;
+    const element = document.getElementById(fieldName);
+    if (element) {
+      element.focus();
+    }
+  }
+
+  showLOV(lovId) {
+    // Implementation for List of Values dialog
+    const lovDialog = new LOVDialog(lovId, (selectedValue) => {
+      this.setFieldValue(this.currentField, selectedValue);
+    });
+    lovDialog.show();
+  }
+
+  enterQuery() {
+    this.queryMode = true;
+    this.clearRecord(true);
+    this.setFocus(Array.from(this.fields.keys())[0]);
+  }
+
+  executeQuery() {
     if (!this.queryMode) return;
     
     const queryParams = {};
@@ -119,166 +145,132 @@ class FormsController {
       }
     });
 
+    this.performQuery(queryParams);
+    this.queryMode = false;
+  }
+
+  async performQuery(params) {
     try {
-      const results = await this.fetchRecords(queryParams);
-      this.populateResults(results);
-      this.queryMode = false;
+      const response = await fetch('/api/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      });
+      
+      if (!response.ok) throw new Error('Query failed');
+      
+      const data = await response.json();
+      this.loadRecord(data);
     } catch (error) {
-      this.showError('Query failed: ' + error.message);
+      this.showError('Query Error', error.message);
     }
   }
 
   async saveRecord() {
-    if (!this.validateForm()) return;
-
-    const recordData = {};
-    this.dirtyFields.forEach(fieldName => {
-      recordData[fieldName] = this.fields.get(fieldName).value;
-    });
-
-    try {
-      await this.executeTrigger('PRE_UPDATE');
-      await this.saveToDatabase(recordData);
-      await this.executeTrigger('POST_UPDATE');
-      this.dirtyFields.clear();
-    } catch (error) {
-      this.showError('Save failed: ' + error.message);
+    if (!this.validateForm()) {
+      this.showError('Validation Error', 'Please correct invalid fields');
+      return;
     }
-  }
 
-  async showLOV(lovName) {
-    const lov = this.lovs.get(lovName);
-    if (!lov) return;
-
-    try {
-      const results = await this.executeLOVQuery(lov.query);
-      const selected = await this.showLOVDialog(results, lov.displayItems);
-      
-      if (selected) {
-        lov.returnItems.forEach((item, index) => {
-          const field = this.fields.get(item);
-          if (field) {
-            field.element.value = selected[index];
-            this.handleFieldChange(item);
-          }
-        });
-      }
-    } catch (error) {
-      this.showError('LOV error: ' + error.message);
-    }
-  }
-
-  async executeTrigger(triggerName, context) {
-    const triggerFunction = this[`trigger_${triggerName}`];
-    if (typeof triggerFunction === 'function') {
-      await triggerFunction.call(this, context);
-    }
-  }
-
-  showError(message) {
-    const errorDiv = document.getElementById('error-message');
-    if (errorDiv) {
-      errorDiv.textContent = message;
-      errorDiv.style.display = 'block';
-      setTimeout(() => {
-        errorDiv.style.display = 'none';
-      }, 5000);
-    } else {
-      alert(message);
-    }
-  }
-
-  validateForm() {
-    let isValid = true;
+    const record = {};
     this.fields.forEach((field, fieldName) => {
-      if (!this.validateField(fieldName, field.value)) {
-        isValid = false;
-      }
+      record[fieldName] = field.value;
     });
-    return isValid;
+
+    try {
+      const response = await fetch('/api/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(record)
+      });
+
+      if (!response.ok) throw new Error('Save failed');
+
+      this.modified = false;
+      this.showMessage('Success', 'Record saved successfully');
+    } catch (error) {
+      this.showError('Save Error', error.message);
+    }
   }
 
-  async fetchRecords(params) {
-    // Implementation would depend on backend API
-    const response = await fetch('/api/records', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(params)
-    });
-    return response.json();
-  }
-
-  async saveToDatabase(data) {
-    // Implementation would depend on backend API
-    const response = await fetch('/api/save', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  }
-
-  clearAllFields() {
+  clearRecord(keepFocus = false) {
+    const currentField = this.currentField;
     this.fields.forEach(field => {
-      field.element.value = '';
-      field.value = null;
+      field.value = '';
+      field.valid = true;
+      field.errorMsg = '';
     });
-    this.dirtyFields.clear();
-  }
-
-  handleTabNavigation(event) {
-    event.preventDefault();
-    const currentElement = document.activeElement;
-    const allFields = Array.from(document.querySelectorAll('input, select'));
-    const currentIndex = allFields.indexOf(currentElement);
-    const nextIndex = event.shiftKey ? currentIndex - 1 : currentIndex + 1;
+    this.modified = false;
     
-    if (nextIndex >= 0 && nextIndex < allFields.length) {
-      allFields[nextIndex].focus();
+    if (!keepFocus) {
+      this.setFocus(Array.from(this.fields.keys())[0]);
+    } else if (currentField) {
+      this.setFocus(currentField);
     }
   }
 
-  handleEnterKey(event) {
-    event.preventDefault();
-    const currentElement = document.activeElement;
-    if (currentElement.tagName === 'INPUT') {
-      this.handleTabNavigation(event);
-    }
+  loadRecord(data) {
+    this.clearRecord();
+    Object.entries(data).forEach(([fieldName, value]) => {
+      this.setFieldValue(fieldName, value);
+    });
+    this.modified = false;
   }
 
-  handleRecordNavigation(event) {
-    if (!this.currentBlock) return;
-    
-    const block = this.blocks.get(this.currentBlock);
-    const currentIndex = block.currentRecord;
-    
-    if (event.key === 'ArrowUp' && currentIndex > 0) {
-      this.navigateToRecord(currentIndex - 1);
-    } else if (event.key === 'ArrowDown' && currentIndex < block.records.length - 1) {
-      this.navigateToRecord(currentIndex + 1);
-    }
-  }
-
-  navigateToRecord(index) {
-    const block = this.blocks.get(this.currentBlock);
-    if (!block || !block.records[index]) return;
-    
-    block.currentRecord = index;
-    const record = block.records[index];
-    
-    Object.entries(record).forEach(([fieldName, value]) => {
-      const field = this.fields.get(fieldName);
-      if (field) {
-        field.element.value = value;
-        field.value = value;
+  triggerFieldChange(fieldName) {
+    const event = new CustomEvent('fieldChange', {
+      detail: {
+        fieldName: fieldName,
+        value: this.getFieldValue(fieldName)
       }
     });
+    document.dispatchEvent(event);
+  }
+
+  showError(title, message) {
+    // Implementation for error dialog
+    console.error(`${title}: ${message}`);
+    alert(`${title}\n${message}`);
+  }
+
+  showMessage(title, message) {
+    // Implementation for message dialog
+    console.log(`${title}: ${message}`);
+    alert(`${title}\n${message}`);
   }
 }
 
-// Initialize controller
+// List of Values Dialog Class
+class LOVDialog {
+  constructor(lovId, callback) {
+    this.lovId = lovId;
+    this.callback = callback;
+  }
+
+  async show() {
+    try {
+      const response = await fetch(`/api/lov/${this.lovId}`);
+      if (!response.ok) throw new Error('Failed to fetch LOV data');
+      
+      const data = await response.json();
+      this.displayLOVDialog(data);
+    } catch (error) {
+      console.error('LOV Error:', error);
+    }
+  }
+
+  displayLOVDialog(data) {
+    // Implementation for LOV dialog display
+    const selected = prompt('Select value:', data.join('\n'));
+    if (selected && this.callback) {
+      this.callback(selected);
+    }
+  }
+}
+
+// Initialize form controller
 const formsController = new FormsController();

@@ -1,596 +1,470 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>th_supitem</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .form-group { margin-bottom: 1rem; }
-        .required:after { content:" *"; color: red; }
-        [dir="rtl"] .form-control { text-align: right; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div class="container mt-4">
-    <form id="mainForm">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4>פרטי ספק</h4>
-            </div>
-            <div class="card-body">
-                <!-- Block A1 -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="ITEM_FROM" class="required">מפריט</label>
-                            <input type="text" id="ITEM_FROM" class="form-control" maxlength="75" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="ITEM_FROM_DESC">תיאור פריט</label>
-                            <input type="text" id="ITEM_FROM_DESC" class="form-control" maxlength="204">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="ITEM_TO">עד פריט</label>
-                            <input type="text" id="ITEM_TO" class="form-control" maxlength="75">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="ITEM_TO_DESC">תיאור פריט סופי</label>
-                            <input type="text" id="ITEM_TO_DESC" class="form-control" maxlength="204">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="SUPP_NO" class="required">מספר ספק</label>
-                            <input type="text" id="SUPP_NO" class="form-control" maxlength="15" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="D_NAME">שם ספק</label>
-                            <input type="text" id="D_NAME" class="form-control" maxlength="70">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Block SUPP_ITEMS -->
-                <div class="table-responsive mt-4">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>מק"ט</th>
-                                <th>תיאור</th>
-                                <th>מס' ספק</th>
-                                <th>יח' מידה</th>
-                                <th>כמות באריזה</th>
-                                <th>מינימום</th>
-                                <th>מקסימום</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" class="form-control" maxlength="10"></td>
-                                <td><input type="text" class="form-control" maxlength="60"></td>
-                                <td><input type="text" class="form-control" maxlength="22"></td>
-                                <td><input type="text" class="form-control" maxlength="8"></td>
-                                <td><input type="number" class="form-control"></td>
-                                <td><input type="number" class="form-control"></td>
-                                <td><input type="number" class="form-control"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary" id="PUSH_PRICE">מחירים</button>
-                        <button type="button" class="btn btn-secondary" id="PUSH_BONUS">נתוני בונוסים</button>
-                        <button type="button" class="btn btn-info" id="PUSH_GENERAL">מידע כללי</button>
-                        <button type="button" class="btn btn-success" id="B_SCAN">סריקה</button>
-                        <button type="button" class="btn btn-warning" id="OTHER_SUP">ספקים אחרים</button>
-                    </div>
-                </div>
-            </div>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <div class="dashboard-header-block">
+            <h1 class="dashboard-title">ניהול פריטי ספק</h1>
         </div>
-    </form>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Form initialization and validation logic here
-});
-</script>
+        <form class="dashboard-form">
+            <!-- Block A1 -->
+            <div class="dashboard-form-group">
+                <div class="dashboard-grid-2">
+                    <div>
+                        <label for="item_from">מפריט</label>
+                        <input type="text" id="item_from" name="item_from" 
+                               class="dashboard-input" maxlength="75">
+                        <input type="text" id="item_from_desc" name="item_from_desc"
+                               class="dashboard-input" maxlength="204">
+                    </div>
+                    <div>
+                        <label for="item_to">עד פריט</label>
+                        <input type="text" id="item_to" name="item_to"
+                               class="dashboard-input" maxlength="75">
+                        <input type="text" id="item_to_desc" name="item_to_desc"
+                               class="dashboard-input" maxlength="204">
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-2">
+                    <div>
+                        <label for="supp_no">מספר ספק</label>
+                        <input type="text" id="supp_no" name="supp_no" required
+                               class="dashboard-input" maxlength="15">
+                    </div>
+                    <div>
+                        <label for="d_name">שם ספק</label>
+                        <input type="text" id="d_name" name="d_name"
+                               class="dashboard-input" maxlength="70">
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-2">
+                    <div>
+                        <label for="file_name">קובץ נתונים (כולל נתיב)</label>
+                        <input type="text" id="file_name" name="file_name"
+                               class="dashboard-input" maxlength="200">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUPP_ITEMS Block -->
+            <div class="dashboard-data-block">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>מקט פריט</th>
+                            <th>תיאור</th>
+                            <th>יח' מידה</th>
+                            <th>מק"ט ספק</th>
+                            <th>כמות באריזה</th>
+                            <th>סימון מק"ט</th>
+                            <th>אישור סימון</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="dashboard-input" maxlength="10"></td>
+                            <td><input type="text" class="dashboard-input" maxlength="182"></td>
+                            <td><input type="text" class="dashboard-input" maxlength="35"></td>
+                            <td><input type="text" class="dashboard-input" maxlength="96"></td>
+                            <td><input type="text" class="dashboard-input" maxlength="53"></td>
+                            <td><input type="checkbox" class="dashboard-checkbox"></td>
+                            <td><input type="text" class="dashboard-input" maxlength="165"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-button-group">
+                <button type="button" class="dashboard-btn dashboard-btn-primary">מחירים</button>
+                <button type="button" class="dashboard-btn dashboard-btn-secondary">בונוס כספים</button>
+                <button type="button" class="dashboard-btn dashboard-btn-secondary">מידע כללי</button>
+                <button type="button" class="dashboard-btn dashboard-btn-secondary">סריקה</button>
+                <button type="button" class="dashboard-btn dashboard-btn-secondary">ספקים אחרים</button>
+            </div>
+        </form>
+    </div>
 </body>
-</html><!-- New form section -->
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>נתונים נוספים</h5>
+</html><!-- New Price Block -->
+<div class="dashboard-data-block">
+    <h3>מחירים</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="price_date">תאריך מחיר</label>
+            <input type="date" id="price_date" name="price_date" class="dashboard-input">
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="CONTACT_NAME">איש קשר</label>
-                        <input type="text" id="CONTACT_NAME" class="form-control" maxlength="30">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="PHONE1">טלפון 1</label>
-                        <input type="tel" id="PHONE1" class="form-control" maxlength="20">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="PHONE2">טלפון 2</label>
-                        <input type="tel" id="PHONE2" class="form-control" maxlength="20">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="FAX">פקס</label>
-                        <input type="tel" id="FAX" class="form-control" maxlength="20">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="EMAIL">דוא"ל</label>
-                        <input type="email" id="EMAIL" class="form-control" maxlength="50">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="ADDRESS">כתובת</label>
-                        <input type="text" id="ADDRESS" class="form-control" maxlength="50">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="CITY">עיר</label>
-                        <input type="text" id="CITY" class="form-control" maxlength="30">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="ZIP">מיקוד</label>
-                        <input type="text" id="ZIP" class="form-control" maxlength="7">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="COUNTRY">מדינה</label>
-                        <input type="text" id="COUNTRY" class="form-control" maxlength="20">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="TAX_ID">מספר עוסק מורשה</label>
-                        <input type="text" id="TAX_ID" class="form-control" maxlength="15">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="PAYMENT_TERMS">תנאי תשלום</label>
-                        <select id="PAYMENT_TERMS" class="form-control">
-                            <option value="30">שוטף + 30</option>
-                            <option value="60">שוטף + 60</option>
-                            <option value="90">שוטף + 90</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="CURRENCY">מטבע</label>
-                        <select id="CURRENCY" class="form-control">
-                            <option value="ILS">₪ - שקל</option>
-                            <option value="USD">$ - דולר</option>
-                            <option value="EUR">€ - יורו</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div><div class="row mt-3">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CREDIT_LIMIT">מסגרת אשראי</label>
-            <input type="number" id="CREDIT_LIMIT" class="form-control" step="0.01">
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CUSTOMER_TYPE">סוג לקוח</label>
-            <select id="CUSTOMER_TYPE" class="form-control">
-                <option value="PRIVATE">פרטי</option>
-                <option value="BUSINESS">עסקי</option>
-                <option value="GOVERNMENT">ממשלתי</option>
+        <div>
+            <label for="currency">מטבע</label>
+            <select id="currency" name="currency" class="dashboard-input">
+                <option value="ILS">₪</option>
+                <option value="USD">$</option>
+                <option value="EUR">€</option>
             </select>
         </div>
+        <div>
+            <label for="exchange_rate">שער חליפין</label>
+            <input type="number" id="exchange_rate" name="exchange_rate" step="0.0001" class="dashboard-input">
+        </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="ACCOUNT_STATUS">סטטוס חשבון</label>
-            <select id="ACCOUNT_STATUS" class="form-control">
-                <option value="ACTIVE">פעיל</option>
-                <option value="FROZEN">מוקפא</option>
-                <option value="CLOSED">סגור</option>
+
+    <table class="dashboard-table">
+        <thead>
+            <tr>
+                <th>מחיר יחידה</th>
+                <th>הנחה %</th>
+                <th>מחיר אחרי הנחה</th>
+                <th>מחיר מינימום</th>
+                <th>תאריך תוקף</th>
+                <th>כמות מינימום</th>
+                <th>זמן אספקה</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number" class="dashboard-input" step="0.01"></td>
+                <td><input type="number" class="dashboard-input" step="0.1" max="100"></td>
+                <td><input type="number" class="dashboard-input" step="0.01" readonly></td>
+                <td><input type="number" class="dashboard-input" step="0.01"></td>
+                <td><input type="date" class="dashboard-input"></td>
+                <td><input type="number" class="dashboard-input"></td>
+                <td><input type="number" class="dashboard-input"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bonus Block -->
+<div class="dashboard-data-block">
+    <h3>בונוסים</h3>
+    <table class="dashboard-table">
+        <thead>
+            <tr>
+                <th>סוג בונוס</th>
+                <th>אחוז בונוס</th>
+                <th>סכום בונוס</th>
+                <th>תאריך תחילה</th>
+                <th>תאריך סיום</th>
+                <th>הערות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><select class="dashboard-input">
+                    <option value="1">כספי</option>
+                    <option value="2">כמותי</option>
+                </select></td>
+                <td><input type="number" class="dashboard-input" step="0.1"></td>
+                <td><input type="number" class="dashboard-input" step="0.01"></td>
+                <td><input type="date" class="dashboard-input"></td>
+                <td><input type="date" class="dashboard-input"></td>
+                <td><input type="text" class="dashboard-input" maxlength="100"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- General Info Block -->
+<div class="dashboard-data-block">
+    <h3>מידע כללי</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="supplier_notes">הערות ספק</label>
+            <textarea id="supplier_notes" name="supplier_notes" class="dashboard-input" rows="4"></textarea>
+        </div>
+        <div>
+            <label for="quality_cert">תעודות איכות</label>
+            <textarea id="quality_cert" name="quality_cert" class="dashboard-input" rows="4"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- Document Scan Block -->
+<div class="dashboard-data-block">
+    <h3>סריקת מסמכים</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="doc_type">סוג מסמך</label>
+            <select id="doc_type" name="doc_type" class="dashboard-input">
+                <option value="1">חשבונית</option>
+                <option value="2">תעודת משלוח</option>
+                <option value="3">מסמך איכות</option>
             </select>
         </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="BANK_NAME">שם הבנק</label>
-            <input type="text" id="BANK_NAME" class="form-control" maxlength="50">
+        <div>
+            <label for="scan_file">קובץ סרוק</label>
+            <input type="file" id="scan_file" name="scan_file" class="dashboard-input">
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="BANK_BRANCH">מספר סניף</label>
-            <input type="text" id="BANK_BRANCH" class="form-control" maxlength="5">
+</div><!-- Contact Details Block -->
+<div class="dashboard-data-block">
+    <h3>פרטי קשר</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="contact_name">איש קשר</label>
+            <input type="text" id="contact_name" name="contact_name" class="dashboard-input">
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="BANK_ACCOUNT">מספר חשבון</label>
-            <input type="text" id="BANK_ACCOUNT" class="form-control" maxlength="10">
+        <div>
+            <label for="contact_phone">טלפון</label>
+            <input type="tel" id="contact_phone" name="contact_phone" class="dashboard-input">
         </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="CONTACT_PERSON">איש קשר</label>
-            <input type="text" id="CONTACT_PERSON" class="form-control" maxlength="50">
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="CONTACT_POSITION">תפקיד</label>
-            <input type="text" id="CONTACT_POSITION" class="form-control" maxlength="30">
+        <div>
+            <label for="contact_email">דוא"ל</label>
+            <input type="email" id="contact_email" name="contact_email" class="dashboard-input">
         </div>
     </div>
 </div>
 
-<div class="row mt-3">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CONTACT_PHONE">טלפון איש קשר</label>
-            <input type="tel" id="CONTACT_PHONE" class="form-control" maxlength="20">
+<!-- Delivery Details Block -->
+<div class="dashboard-data-block">
+    <h3>פרטי משלוח</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="delivery_address">כתובת למשלוח</label>
+            <input type="text" id="delivery_address" name="delivery_address" class="dashboard-input">
+        </div>
+        <div>
+            <label for="delivery_instructions">הוראות מיוחדות</label>
+            <textarea id="delivery_instructions" name="delivery_instructions" class="dashboard-input" rows="2"></textarea>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CONTACT_MOBILE">נייד איש קשר</label>
-            <input type="tel" id="CONTACT_MOBILE" class="form-control" maxlength="20">
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="delivery_city">עיר</label>
+            <input type="text" id="delivery_city" name="delivery_city" class="dashboard-input">
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CONTACT_EMAIL">דוא"ל איש קשר</label>
-            <input type="email" id="CONTACT_EMAIL" class="form-control" maxlength="50">
+        <div>
+            <label for="delivery_zip">מיקוד</label>
+            <input type="text" id="delivery_zip" name="delivery_zip" class="dashboard-input">
+        </div>
+        <div>
+            <label for="delivery_country">מדינה</label>
+            <input type="text" id="delivery_country" name="delivery_country" class="dashboard-input">
         </div>
     </div>
 </div>
 
-<div class="row mt-3">
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="DISCOUNT_PERCENT">אחוז הנחה</label>
-            <input type="number" id="DISCOUNT_PERCENT" class="form-control" min="0" max="100" step="0.01">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="CREDIT_RATING">דירוג אשראי</label>
-            <select id="CREDIT_RATING" class="form-control">
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
+<!-- Payment Terms Block -->
+<div class="dashboard-data-block">
+    <h3>תנאי תשלום</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="payment_method">שיטת תשלום</label>
+            <select id="payment_method" name="payment_method" class="dashboard-input">
+                <option value="1">העברה בנקאית</option>
+                <option value="2">צ'ק</option>
+                <option value="3">אשראי</option>
             </select>
         </div>
+        <div>
+            <label for="credit_days">ימי אשראי</label>
+            <input type="number" id="credit_days" name="credit_days" class="dashboard-input">
+        </div>
+        <div>
+            <label for="credit_limit">מסגרת אשראי</label>
+            <input type="number" id="credit_limit" name="credit_limit" class="dashboard-input" step="0.01">
+        </div>
     </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="PRICE_LIST">מחירון</label>
-            <select id="PRICE_LIST" class="form-control">
-                <option value="RETAIL">קמעונאי</option>
-                <option value="WHOLESALE">סיטונאי</option>
-                <option value="VIP">VIP</option>
+</div>
+
+<!-- Additional Settings -->
+<div class="dashboard-data-block">
+    <h3>הגדרות נוספות</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="supplier_type">סוג ספק</label>
+            <select id="supplier_type" name="supplier_type" class="dashboard-input">
+                <option value="1">קבוע</option>
+                <option value="2">מזדמן</option>
+                <option value="3">חד פעמי</option>
             </select>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="SALES_REGION">אזור מכירות</label>
-            <input type="text" id="SALES_REGION" class="form-control" maxlength="30">
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-12">
-        <div class="form-group">
-            <label for="NOTES">הערות</label>
-            <textarea id="NOTES" class="form-control" rows="3"></textarea>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CREATED_DATE">תאריך יצירה</label>
-            <input type="date" id="CREATED_DATE" class="form-control" readonly>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="CREATED_BY">נוצר על ידי</label>
-            <input type="text" id="CREATED_BY" class="form-control" readonly>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="LAST_UPDATE">עדכון אחרון</label>
-            <input type="datetime-local" id="LAST_UPDATE" class="form-control" readonly>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary me-2">שמור</button>
-        <button type="button" class="btn btn-secondary">בטל</button>
-    </div>
-</div><div class="row mt-4 border-top pt-3">
-    <h4>פרטי תשלום</h4>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="PAYMENT_TERMS">תנאי תשלום</label>
-            <select id="PAYMENT_TERMS" class="form-control">
-                <option value="IMMEDIATE">מיידי</option>
-                <option value="NET30">שוטף + 30</option>
-                <option value="NET60">שוטף + 60</option>
-                <option value="NET90">שוטף + 90</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="CREDIT_LIMIT">מסגרת אשראי</label>
-            <input type="number" id="CREDIT_LIMIT" class="form-control" min="0">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="BANK_NAME">שם בנק</label>
-            <input type="text" id="BANK_NAME" class="form-control" maxlength="50">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="BANK_BRANCH">סניף</label>
-            <input type="text" id="BANK_BRANCH" class="form-control" maxlength="10">
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="ACCOUNT_NUMBER">מספר חשבון</label>
-            <input type="text" id="ACCOUNT_NUMBER" class="form-control" maxlength="20">
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="VAT_NUMBER">מספר עוסק מורשה</label>
-            <input type="text" id="VAT_NUMBER" class="form-control" maxlength="15">
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="TAX_ID">מספר ח.פ/ת.ז</label>
-            <input type="text" id="TAX_ID" class="form-control" maxlength="15">
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4 border-top pt-3">
-    <h4>סיווג לקוח</h4>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="CUSTOMER_TYPE">סוג לקוח</label>
-            <select id="CUSTOMER_TYPE" class="form-control">
-                <option value="PRIVATE">פרטי</option>
-                <option value="BUSINESS">עסקי</option>
-                <option value="GOVERNMENT">ממשלתי</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="INDUSTRY">ענף</label>
-            <input type="text" id="INDUSTRY" class="form-control" maxlength="50">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="SIZE_CATEGORY">קטגוריית גודל</label>
-            <select id="SIZE_CATEGORY" class="form-control">
-                <option value="SMALL">קטן</option>
-                <option value="MEDIUM">בינוני</option>
-                <option value="LARGE">גדול</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="CUSTOMER_STATUS">סטטוס</label>
-            <select id="CUSTOMER_STATUS" class="form-control">
-                <option value="ACTIVE">פעיל</option>
-                <option value="INACTIVE">לא פעיל</option>
-                <option value="SUSPENDED">מושהה</option>
+        <div>
+            <label for="supplier_status">סטטוס</label>
+            <select id="supplier_status" name="supplier_status" class="dashboard-input">
+                <option value="1">פעיל</option>
+                <option value="2">לא פעיל</option>
+                <option value="3">מושהה</option>
             </select>
         </div>
     </div>
 </div>
 
-<div class="row mt-4 border-top pt-3">
-    <h4>מידע נוסף</h4>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="MARKETING_PREFERENCES">העדפות שיווק</label>
-            <div class="form-check">
-                <input type="checkbox" id="EMAIL_MARKETING" class="form-check-input">
-                <label class="form-check-label" for="EMAIL_MARKETING">דיוור אלקטרוני</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" id="SMS_MARKETING" class="form-check-input">
-                <label class="form-check-label" for="SMS_MARKETING">הודעות SMS</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" id="PHONE_MARKETING" class="form-check-input">
-                <label class="form-check-label" for="PHONE_MARKETING">שיחות טלפון</label>
-            </div>
+</body>
+</html><!-- Accounting Details Block -->
+<div class="dashboard-data-block">
+    <h3>פרטי הנהלת חשבונות</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="tax_id">מספר עוסק מורשה</label>
+            <input type="text" id="tax_id" name="tax_id" class="dashboard-input">
+        </div>
+        <div>
+            <label for="withholding_rate">אחוז ניכוי מס במקור</label>
+            <input type="number" id="withholding_rate" name="withholding_rate" class="dashboard-input" step="0.01">
+        </div>
+        <div>
+            <label for="tax_deduction_valid">תוקף אישור ניכוי מס</label>
+            <input type="date" id="tax_deduction_valid" name="tax_deduction_valid" class="dashboard-input">
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="PREFERRED_CONTACT_TIME">זמן מועדף ליצירת קשר</label>
-            <select id="PREFERRED_CONTACT_TIME" class="form-control">
-                <option value="MORNING">בוקר</option>
-                <option value="AFTERNOON">צהריים</option>
-                <option value="EVENING">ערב</option>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="bank_name">שם הבנק</label>
+            <input type="text" id="bank_name" name="bank_name" class="dashboard-input">
+        </div>
+        <div>
+            <label for="bank_branch">מספר סניף</label>
+            <input type="text" id="bank_branch" name="bank_branch" class="dashboard-input">
+        </div>
+    </div>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="account_number">מספר חשבון</label>
+            <input type="text" id="account_number" name="account_number" class="dashboard-input">
+        </div>
+        <div>
+            <label for="account_name">שם החשבון</label>
+            <input type="text" id="account_name" name="account_name" class="dashboard-input">
+        </div>
+    </div>
+</div>
+
+<!-- Document Management Block -->
+<div class="dashboard-data-block">
+    <h3>ניהול מסמכים</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="contract_number">מספר חוזה</label>
+            <input type="text" id="contract_number" name="contract_number" class="dashboard-input">
+        </div>
+        <div>
+            <label for="contract_expiry">תאריך תפוגת חוזה</label>
+            <input type="date" id="contract_expiry" name="contract_expiry" class="dashboard-input">
+        </div>
+    </div>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="insurance_policy">מספר פוליסת ביטוח</label>
+            <input type="text" id="insurance_policy" name="insurance_policy" class="dashboard-input">
+        </div>
+        <div>
+            <label for="insurance_expiry">תוקף ביטוח</label>
+            <input type="date" id="insurance_expiry" name="insurance_expiry" class="dashboard-input">
+        </div>
+    </div>
+</div>
+
+<!-- Additional Information Block -->
+<div class="dashboard-data-block">
+    <h3>מידע נוסף</h3>
+    <div class="dashboard-grid-1">
+        <div>
+            <label for="comments">הערות</label>
+            <textarea id="comments" name="comments" class="dashboard-input" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="created_date">תאריך יצירה</label>
+            <input type="date" id="created_date" name="created_date" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="last_updated">עדכון אחרון</label>
+            <input type="date" id="last_updated" name="last_updated" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="updated_by">עודכן על ידי</label>
+            <input type="text" id="updated_by" name="updated_by" class="dashboard-input" readonly>
+        </div>
+    </div>
+</div><!-- Status & Approvals Block -->
+<div class="dashboard-data-block">
+    <h3>סטטוס ואישורים</h3>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="approval_status">סטטוס אישור</label>
+            <select id="approval_status" name="approval_status" class="dashboard-input">
+                <option value="pending">ממתין לאישור</option>
+                <option value="approved">מאושר</option>
+                <option value="rejected">נדחה</option>
             </select>
         </div>
-    </div>
-</div><div class="row mt-4 border-top pt-3">
-    <h4>פרטי התקשרות נוספים</h4>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="SECONDARY_PHONE">טלפון משני</label>
-            <input type="tel" id="SECONDARY_PHONE" class="form-control" maxlength="20">
+        <div>
+            <label for="approval_date">תאריך אישור</label>
+            <input type="date" id="approval_date" name="approval_date" class="dashboard-input">
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="FAX">פקס</label>
-            <input type="tel" id="FAX" class="form-control" maxlength="20">
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="approval_notes">הערות לאישור</label>
+            <textarea id="approval_notes" name="approval_notes" class="dashboard-input" rows="2"></textarea>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="WEBSITE">אתר אינטרנט</label>
-            <input type="url" id="WEBSITE" class="form-control">
+        <div>
+            <label for="approved_by">מאשר</label>
+            <input type="text" id="approved_by" name="approved_by" class="dashboard-input">
         </div>
     </div>
 </div>
 
-<div class="row mt-4 border-top pt-3">
-    <h4>פרטי חשבון</h4>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="BANK_NAME">שם הבנק</label>
-            <input type="text" id="BANK_NAME" class="form-control" maxlength="50">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="BANK_BRANCH">מספר סניף</label>
-            <input type="text" id="BANK_BRANCH" class="form-control" maxlength="10">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="ACCOUNT_NUMBER">מספר חשבון</label>
-            <input type="text" id="ACCOUNT_NUMBER" class="form-control" maxlength="20">
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4 border-top pt-3">
-    <h4>מידע נוסף</h4>
-    <div class="col-md-12">
-        <div class="form-group">
-            <label for="SPECIAL_INSTRUCTIONS">הערות מיוחדות</label>
-            <textarea id="SPECIAL_INSTRUCTIONS" class="form-control" rows="3"></textarea>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="REFERENCE_SOURCE">מקור הפניה</label>
-            <select id="REFERENCE_SOURCE" class="form-control">
-                <option value="WEBSITE">אתר אינטרנט</option>
-                <option value="REFERRAL">המלצה</option>
-                <option value="ADVERTISING">פרסום</option>
-                <option value="OTHER">אחר</option>
+<!-- System Details Block -->
+<div class="dashboard-data-block">
+    <h3>פרטי מערכת</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="record_status">סטטוס רשומה</label>
+            <select id="record_status" name="record_status" class="dashboard-input">
+                <option value="active">פעיל</option>
+                <option value="inactive">לא פעיל</option>
+                <option value="archived">בארכיון</option>
             </select>
         </div>
+        <div>
+            <label for="last_sync">סנכרון אחרון</label>
+            <input type="datetime-local" id="last_sync" name="last_sync" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="system_id">מזהה מערכת</label>
+            <input type="text" id="system_id" name="system_id" class="dashboard-input" readonly>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="CUSTOMER_RATING">דירוג לקוח</label>
-            <select id="CUSTOMER_RATING" class="form-control">
-                <option value="5">5 כוכבים</option>
-                <option value="4">4 כוכבים</option>
-                <option value="3">3 כוכבים</option>
-                <option value="2">2 כוכבים</option>
-                <option value="1">כוכב 1</option>
-            </select>
+    <div class="dashboard-grid-2">
+        <div>
+            <label for="version_number">מספר גרסה</label>
+            <input type="text" id="version_number" name="version_number" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="process_status">סטטוס תהליך</label>
+            <input type="text" id="process_status" name="process_status" class="dashboard-input" readonly>
         </div>
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="ATTACHMENTS">קבצים מצורפים</label>
-            <input type="file" id="ATTACHMENTS" class="form-control-file" multiple>
+</body>
+</html><!-- Additional System Details -->
+<div class="dashboard-data-block">
+    <h3>פרטים נוספים</h3>
+    <div class="dashboard-grid-3">
+        <div>
+            <label for="backup_status">סטטוס גיבוי</label>
+            <input type="text" id="backup_status" name="backup_status" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="last_maintenance">תחזוקה אחרונה</label>
+            <input type="datetime-local" id="last_maintenance" name="last_maintenance" class="dashboard-input" readonly>
+        </div>
+        <div>
+            <label for="maintenance_notes">הערות תחזוקה</label>
+            <textarea id="maintenance_notes" name="maintenance_notes" class="dashboard-input" rows="2"></textarea>
         </div>
     </div>
 </div>
 
-<div class="row mt-4 mb-4">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="TERMS_ACCEPTANCE">
-                <input type="checkbox" id="TERMS_ACCEPTANCE" class="form-check-input me-2">
-                אני מאשר/ת את תנאי השימוש והמדיניות
-            </label>
-        </div>
-    </div>
-</div><div class="row mt-4">
-    <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary btn-lg mx-2">שמור</button>
-        <button type="reset" class="btn btn-secondary btn-lg mx-2">נקה טופס</button>
-    </div>
-</div>
-</form>
+</body>
+</html>

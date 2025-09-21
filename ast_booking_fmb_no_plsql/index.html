@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST Booking Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <header class="dashboard-header-block">
+            <h1 class="dashboard-title">מערכת הזמנות</h1>
+        </header>
+
+        <form class="dashboard-form">
+            <!-- BOOKING Block -->
+            <section class="dashboard-data-block">
+                <div class="dashboard-grid">
+                    <!-- Row 1 -->
+                    <div class="dashboard-form-group">
+                        <label for="CLIENT_NO" class="dashboard-label">מספר</label>
+                        <input type="text" id="CLIENT_NO" name="CLIENT_NO" 
+                               class="dashboard-input" maxlength="9" required>
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="C_NAME">שם לקוח</label>
+                        <input type="text" id="C_NAME" name="C_NAME" 
+                               class="dashboard-input" maxlength="80">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="ARV_DATE">תאריך הגעה צפוי</label>
+                        <input type="date" id="ARV_DATE" name="ARV_DATE" 
+                               class="dashboard-input">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="ARV_TIME">שעת הגעה</label>
+                        <input type="time" id="ARV_TIME" name="ARV_TIME" 
+                               class="dashboard-input">
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-form-group">
+                        <label for="B_ID_TYPE">סוג תעודה</label>
+                        <select id="B_ID_TYPE" name="B_ID_TYPE" class="dashboard-select">
+                            <option value="">בחר סוג תעודה</option>
+                            <option value="ת.ז">תעודת זהות</option>
+                            <option value="דרכון">דרכון</option>
+                        </select>
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_ID">מספר תעודה</label>
+                        <input type="text" id="B_ID" name="B_ID" 
+                               class="dashboard-input" maxlength="15">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_NAME">שם משפחה</label>
+                        <input type="text" id="B_NAME" name="B_NAME" 
+                               class="dashboard-input" maxlength="30" required>
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_FIRST_NAME">שם פרטי</label>
+                        <input type="text" id="B_FIRST_NAME" name="B_FIRST_NAME" 
+                               class="dashboard-input" maxlength="20" required>
+                    </div>
+                </div>
+
+                <!-- Row 3 - Contact Info -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-form-group">
+                        <label for="B_HTEL">טלפון בית</label>
+                        <input type="tel" id="B_HTEL" name="B_HTEL" 
+                               class="dashboard-input" maxlength="17">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_WTEL">טלפון עבודה</label>
+                        <input type="tel" id="B_WTEL" name="B_WTEL" 
+                               class="dashboard-input" maxlength="17">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_CELL">טלפון נייד</label>
+                        <input type="tel" id="B_CELL" name="B_CELL" 
+                               class="dashboard-input" maxlength="17">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label class="dashboard-checkbox-label">
+                            <input type="checkbox" id="TELME_REMAINDER_FLAG" 
+                                   name="TELME_REMAINDER_FLAG" class="dashboard-checkbox">
+                            תזכורת הודעות והתראות למטופל
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Row 4 - Additional Info -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-form-group">
+                        <label for="B_BIRTHDAY">תאריך לידה</label>
+                        <input type="date" id="B_BIRTHDAY" name="B_BIRTHDAY" 
+                               class="dashboard-input">
+                    </div>
+
+                    <div class="dashboard-form-group">
+                        <label for="B_SEX">מין</label>
+                        <div class="dashboard-radio-group">
+                            <label class="dashboard-radio-label">
+                                <input type="radio" name="B_SEX" value="ז" class="dashboard-radio">
+                                זכר
+                            </label>
+                            <label class="dashboard-radio-label">
+                                <input type="radio" name="B_SEX" value="נ" class="dashboard-radio">
+                                נקבה
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="dashboard-button-group">
+                <button type="submit" class="dashboard-btn dashboard-btn-primary">שמור</button>
+                <button type="button" class="dashboard-btn dashboard-btn-secondary">ביטול</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html><!-- Patient Insurance Section -->
+<section class="dashboard-section">
+    <h2>פרטי ביטוח</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="INSURANCE_TYPE">קופת חולים</label>
+            <select id="INSURANCE_TYPE" name="INSURANCE_TYPE" class="dashboard-select">
+                <option value="">בחר קופת חולים</option>
+                <option value="1">כללית</option>
+                <option value="2">מכבי</option>
+                <option value="3">מאוחדת</option>
+                <option value="4">לאומית</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="INSURANCE_NUM">מספר חבר</label>
+            <input type="text" id="INSURANCE_NUM" name="INSURANCE_NUM" 
+                   class="dashboard-input" maxlength="12">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SUPPLEMENTARY_INSURANCE">ביטוח משלים</label>
+            <select id="SUPPLEMENTARY_INSURANCE" name="SUPPLEMENTARY_INSURANCE" class="dashboard-select">
+                <option value="">בחר ביטוח משלים</option>
+                <option value="1">כללית מושלם</option>
+                <option value="2">מכבי שלי</option>
+                <option value="3">מאוחדת עדיף</option>
+                <option value="4">לאומית זהב</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CLINIC_CODE">מרפאה</label>
+            <input type="text" id="CLINIC_CODE" name="CLINIC_CODE" 
+                   class="dashboard-input" maxlength="10">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DOCTOR_NAME">רופא מטפל</label>
+            <input type="text" id="DOCTOR_NAME" name="DOCTOR_NAME" 
+                   class="dashboard-input" maxlength="30">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VALID_FROM">תוקף ביטוח מתאריך</label>
+            <input type="date" id="VALID_FROM" name="VALID_FROM" 
+                   class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VALID_TO">תוקף ביטוח עד תאריך</label>
+            <input type="date" id="VALID_TO" name="VALID_TO" 
+                   class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Contact Section -->
+<section class="dashboard-section">
+    <h2>איש קשר לשעת חירום</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_NAME">שם מלא</label>
+            <input type="text" id="EMERGENCY_NAME" name="EMERGENCY_NAME" 
+                   class="dashboard-input" maxlength="40">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_RELATION">קרבה</label>
+            <input type="text" id="EMERGENCY_RELATION" name="EMERGENCY_RELATION" 
+                   class="dashboard-input" maxlength="20">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_PHONE">טלפון</label>
+            <input type="tel" id="EMERGENCY_PHONE" name="EMERGENCY_PHONE" 
+                   class="dashboard-input" maxlength="17">
+        </div>
+    </div>
+</section><!-- Medical History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה רפואית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CHRONIC_DISEASES">מחלות כרוניות</label>
+            <textarea id="CHRONIC_DISEASES" name="CHRONIC_DISEASES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="REGULAR_MEDICATIONS">תרופות קבועות</label>
+            <textarea id="REGULAR_MEDICATIONS" name="REGULAR_MEDICATIONS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALLERGIES">אלרגיות</label>
+            <textarea id="ALLERGIES" name="ALLERGIES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PAST_SURGERIES">ניתוחים בעבר</label>
+            <textarea id="PAST_SURGERIES" name="PAST_SURGERIES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="BLOOD_TYPE">סוג דם</label>
+            <select id="BLOOD_TYPE" name="BLOOD_TYPE" class="dashboard-select">
+                <option value="">בחר סוג דם</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="GENETIC_DISEASES">מחלות תורשתיות</label>
+            <textarea id="GENETIC_DISEASES" name="GENETIC_DISEASES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Family Medical History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה רפואית משפחתית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="FATHER_DISEASES">מחלות אב</label>
+            <textarea id="FATHER_DISEASES" name="FATHER_DISEASES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MOTHER_DISEASES">מחלות אם</label>
+            <textarea id="MOTHER_DISEASES" name="MOTHER_DISEASES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SIBLINGS_DISEASES">מחלות אחים</label>
+            <textarea id="SIBLINGS_DISEASES" name="SIBLINGS_DISEASES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Lifestyle Information Section -->
+<section class="dashboard-section">
+    <h2>אורח חיים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="SMOKING_STATUS">עישון</label>
+            <select id="SMOKING_STATUS" name="SMOKING_STATUS" class="dashboard-select">
+                <option value="">בחר סטטוס</option>
+                <option value="NEVER">לא מעשן</option>
+                <option value="CURRENT">מעשן</option>
+                <option value="PAST">מעשן בעבר</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALCOHOL_CONSUMPTION">צריכת אלכוהול</label>
+            <select id="ALCOHOL_CONSUMPTION" name="ALCOHOL_CONSUMPTION" class="dashboard-select">
+                <option value="">בחר תדירות</option>
+                <option value="NONE">לא צורך</option>
+                <option value="OCCASIONAL">לעיתים רחוקות</option>
+                <option value="REGULAR">באופן קבוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PHYSICAL_ACTIVITY">פעילות גופנית</label>
+            <select id="PHYSICAL_ACTIVITY" name="PHYSICAL_ACTIVITY" class="dashboard-select">
+                <option value="">בחר תדירות</option>
+                <option value="NONE">לא מבצע</option>
+                <option value="LIGHT">קלה</option>
+                <option value="MODERATE">בינונית</option>
+                <option value="INTENSE">אינטנסיבית</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Medications Section -->
+<section class="dashboard-section">
+    <h2>תרופות וטיפולים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CURRENT_MEDICATIONS">תרופות נוכחיות</label>
+            <textarea id="CURRENT_MEDICATIONS" name="CURRENT_MEDICATIONS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MEDICATION_ALLERGIES">אלרגיות לתרופות</label>
+            <textarea id="MEDICATION_ALLERGIES" name="MEDICATION_ALLERGIES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SUPPLEMENTS">תוספי תזונה</label>
+            <textarea id="SUPPLEMENTS" name="SUPPLEMENTS" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Medical History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה רפואית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="PAST_SURGERIES">ניתוחים בעבר</label>
+            <textarea id="PAST_SURGERIES" name="PAST_SURGERIES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CHRONIC_CONDITIONS">מחלות כרוניות</label>
+            <textarea id="CHRONIC_CONDITIONS" name="CHRONIC_CONDITIONS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="HOSPITALIZATIONS">אשפוזים</label>
+            <textarea id="HOSPITALIZATIONS" name="HOSPITALIZATIONS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="INJURIES">פציעות משמעותיות</label>
+            <textarea id="INJURIES" name="INJURIES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Vaccinations Section -->
+<section class="dashboard-section">
+    <h2>חיסונים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CHILDHOOD_VACCINES">חיסוני ילדות</label>
+            <select id="CHILDHOOD_VACCINES" name="CHILDHOOD_VACCINES" class="dashboard-select">
+                <option value="">בחר אפשרות</option>
+                <option value="COMPLETE">סדרה מלאה</option>
+                <option value="PARTIAL">סדרה חלקית</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="RECENT_VACCINES">חיסונים אחרונים</label>
+            <textarea id="RECENT_VACCINES" name="RECENT_VACCINES" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Current Health Status Section -->
+<section class="dashboard-section">
+    <h2>מצב בריאותי נוכחי</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CURRENT_SYMPTOMS">תסמינים נוכחיים</label>
+            <textarea id="CURRENT_SYMPTOMS" name="CURRENT_SYMPTOMS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PAIN_LEVEL">רמת כאב</label>
+            <select id="PAIN_LEVEL" name="PAIN_LEVEL" class="dashboard-select">
+                <option value="">בחר רמה</option>
+                <option value="0">0 - ללא כאב</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 - כאב חמור</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PAIN_LOCATION">מיקום הכאב</label>
+            <textarea id="PAIN_LOCATION" name="PAIN_LOCATION" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+    </div>
+</section><!-- Medications Section -->
+<section class="dashboard-section">
+    <h2>תרופות</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CURRENT_MEDICATIONS">תרופות נוכחיות</label>
+            <textarea id="CURRENT_MEDICATIONS" name="CURRENT_MEDICATIONS" 
+                      class="dashboard-textarea" rows="4"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MEDICATION_ALLERGIES">אלרגיות לתרופות</label>
+            <textarea id="MEDICATION_ALLERGIES" name="MEDICATION_ALLERGIES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MEDICATION_SIDE_EFFECTS">תופעות לוואי מתרופות</label>
+            <textarea id="MEDICATION_SIDE_EFFECTS" name="MEDICATION_SIDE_EFFECTS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Lifestyle Section -->
+<section class="dashboard-section">
+    <h2>אורח חיים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="SMOKING_STATUS">עישון</label>
+            <select id="SMOKING_STATUS" name="SMOKING_STATUS" class="dashboard-select">
+                <option value="">בחר סטטוס</option>
+                <option value="NEVER">לא מעשן</option>
+                <option value="FORMER">מעשן לשעבר</option>
+                <option value="CURRENT">מעשן נוכחי</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALCOHOL_CONSUMPTION">צריכת אלכוהול</label>
+            <select id="ALCOHOL_CONSUMPTION" name="ALCOHOL_CONSUMPTION" class="dashboard-select">
+                <option value="">בחר תדירות</option>
+                <option value="NONE">לא שותה</option>
+                <option value="OCCASIONAL">לעיתים רחוקות</option>
+                <option value="MODERATE">צריכה מתונה</option>
+                <option value="HEAVY">צריכה מרובה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EXERCISE_ROUTINE">פעילות גופנית</label>
+            <textarea id="EXERCISE_ROUTINE" name="EXERCISE_ROUTINE" 
+                      class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DIET_DESCRIPTION">תזונה</label>
+            <textarea id="DIET_DESCRIPTION" name="DIET_DESCRIPTION" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Mental Health Section -->
+<section class="dashboard-section">
+    <h2>בריאות נפשית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="STRESS_LEVEL">רמת מתח</label>
+            <select id="STRESS_LEVEL" name="STRESS_LEVEL" class="dashboard-select">
+                <option value="">בחר רמה</option>
+                <option value="LOW">נמוכה</option>
+                <option value="MODERATE">בינונית</option>
+                <option value="HIGH">גבוהה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SLEEP_QUALITY">איכות שינה</label>
+            <select id="SLEEP_QUALITY" name="SLEEP_QUALITY" class="dashboard-select">
+                <option value="">בחר איכות</option>
+                <option value="GOOD">טובה</option>
+                <option value="FAIR">סבירה</option>
+                <option value="POOR">ירודה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MENTAL_HEALTH_CONCERNS">דאגות בריאות נפשית</label>
+            <textarea id="MENTAL_HEALTH_CONCERNS" name="MENTAL_HEALTH_CONCERNS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-section">
+    <h2>מעקב רפואי</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="LAST_CHECKUP">בדיקה אחרונה</label>
+            <input type="date" id="LAST_CHECKUP" name="LAST_CHECKUP" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="NEXT_APPOINTMENT">תור הבא</label>
+            <input type="date" id="NEXT_APPOINTMENT" name="NEXT_APPOINTMENT" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FOLLOW_UP_NOTES">הערות למעקב</label>
+            <textarea id="FOLLOW_UP_NOTES" name="FOLLOW_UP_NOTES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Preventive Care Section -->
+<section class="dashboard-section">
+    <h2>רפואה מונעת</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="IMMUNIZATIONS">חיסונים</label>
+            <textarea id="IMMUNIZATIONS" name="IMMUNIZATIONS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SCREENING_TESTS">בדיקות סקר</label>
+            <textarea id="SCREENING_TESTS" name="SCREENING_TESTS" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PREVENTIVE_MEASURES">אמצעי מניעה</label>
+            <textarea id="PREVENTIVE_MEASURES" name="PREVENTIVE_MEASURES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Family History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה משפחתית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="FAMILY_HEART_DISEASE">מחלות לב במשפחה</label>
+            <select id="FAMILY_HEART_DISEASE" name="FAMILY_HEART_DISEASE" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FAMILY_DIABETES">סוכרת במשפחה</label>
+            <select id="FAMILY_DIABETES" name="FAMILY_DIABETES" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FAMILY_CANCER">סרטן במשפחה</label>
+            <select id="FAMILY_CANCER" name="FAMILY_CANCER" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FAMILY_MENTAL_HEALTH">בעיות נפשיות במשפחה</label>
+            <select id="FAMILY_MENTAL_HEALTH" name="FAMILY_MENTAL_HEALTH" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FAMILY_HISTORY_NOTES">הערות נוספות להיסטוריה משפחתית</label>
+            <textarea id="FAMILY_HISTORY_NOTES" name="FAMILY_HISTORY_NOTES" 
+                      class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Contacts Section -->
+<section class="dashboard-section">
+    <h2>אנשי קשר לשעת חירום</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_NAME">שם איש קשר ראשון</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_NAME" name="EMERGENCY_CONTACT_1_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_PHONE">טלפון איש קשר ראשון</label>
+            <input type="tel" id="EMERGENCY_CONTACT_1_PHONE" name="EMERGENCY_CONTACT_1_PHONE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_RELATION">קרבה איש קשר ראשון</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_RELATION" name="EMERGENCY_CONTACT_1_RELATION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_NAME">שם איש קשר שני</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_NAME" name="EMERGENCY_CONTACT_2_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_PHONE">טלפון איש קשר שני</label>
+            <input type="tel" id="EMERGENCY_CONTACT_2_PHONE" name="EMERGENCY_CONTACT_2_PHONE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_RELATION">קרבה איש קשר שני</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_RELATION" name="EMERGENCY_CONTACT_2_RELATION" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Medical History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה רפואית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CHRONIC_CONDITIONS">מחלות כרוניות</label>
+            <textarea id="CHRONIC_CONDITIONS" name="CHRONIC_CONDITIONS" class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CURRENT_MEDICATIONS">תרופות נוכחיות</label>
+            <textarea id="CURRENT_MEDICATIONS" name="CURRENT_MEDICATIONS" class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALLERGIES">אלרגיות</label>
+            <textarea id="ALLERGIES" name="ALLERGIES" class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PAST_SURGERIES">ניתוחים בעבר</label>
+            <textarea id="PAST_SURGERIES" name="PAST_SURGERIES" class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="BLOOD_TYPE">סוג דם</label>
+            <select id="BLOOD_TYPE" name="BLOOD_TYPE" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="HOSPITALIZATION_HISTORY">היסטורית אשפוזים</label>
+            <textarea id="HOSPITALIZATION_HISTORY" name="HOSPITALIZATION_HISTORY" class="dashboard-textarea" rows="3"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Lifestyle Section -->
+<section class="dashboard-section">
+    <h2>אורח חיים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="SMOKING_STATUS">עישון</label>
+            <select id="SMOKING_STATUS" name="SMOKING_STATUS" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="NEVER">לא מעשן</option>
+                <option value="CURRENT">מעשן</option>
+                <option value="PAST">מעשן בעבר</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALCOHOL_CONSUMPTION">צריכת אלכוהול</label>
+            <select id="ALCOHOL_CONSUMPTION" name="ALCOHOL_CONSUMPTION" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="NONE">לא שותה</option>
+                <option value="OCCASIONAL">לעיתים רחוקות</option>
+                <option value="MODERATE">שתייה מתונה</option>
+                <option value="HEAVY">שתייה מרובה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PHYSICAL_ACTIVITY">פעילות גופנית</label>
+            <select id="PHYSICAL_ACTIVITY" name="PHYSICAL_ACTIVITY" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="NONE">ללא פעילות</option>
+                <option value="LIGHT">קלה</option>
+                <option value="MODERATE">בינונית</option>
+                <option value="HEAVY">אינטנסיבית</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DIET_TYPE">סוג תזונה</label>
+            <select id="DIET_TYPE" name="DIET_TYPE" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="REGULAR">רגילה</option>
+                <option value="VEGETARIAN">צמחונית</option>
+                <option value="VEGAN">טבעונית</option>
+                <option value="KOSHER">כשרה</option>
+                <option value="OTHER">אחר</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<!-- Vaccinations Section -->
+<section class="dashboard-section">
+    <h2>חיסונים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CHILDHOOD_VACCINES">חיסוני ילדות</label>
+            <select id="CHILDHOOD_VACCINES" name="CHILDHOOD_VACCINES" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="COMPLETE">מלא</option>
+                <option value="PARTIAL">חלקי</option>
+                <option value="NONE">ללא</option>
+                <option value="UNKNOWN">לא ידוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="FLU_VACCINE_DATE">תאריך חיסון שפעת אחרון</label>
+            <input type="date" id="FLU_VACCINE_DATE" name="FLU_VACCINE_DATE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="COVID_VACCINE_STATUS">סטטוס חיסון קורונה</label>
+            <select id="COVID_VACCINE_STATUS" name="COVID_VACCINE_STATUS" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="NONE">ללא</option>
+                <option value="PARTIAL">חלקי</option>
+                <option value="FULL">מלא</option>
+                <option value="BOOSTER">כולל דחף</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="TETANUS_VACCINE_DATE">תאריך חיסון טטנוס אחרון</label>
+            <input type="date" id="TETANUS_VACCINE_DATE" name="TETANUS_VACCINE_DATE" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Additional Medical Information Section -->
+<section class="dashboard-section">
+    <h2>מידע רפואי נוסף</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="MEDICAL_DEVICES">מכשור רפואי</label>
+            <textarea id="MEDICAL_DEVICES" name="MEDICAL_DEVICES" class="dashboard-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CURRENT_TREATMENTS">טיפולים נוכחיים</label>
+            <textarea id="CURRENT_TREATMENTS" name="CURRENT_TREATMENTS" class="dashboard-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DISABILITY_STATUS">סטטוס נכות</label>
+            <select id="DISABILITY_STATUS" name="DISABILITY_STATUS" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="NONE">ללא</option>
+                <option value="TEMPORARY">זמנית</option>
+                <option value="PERMANENT">קבועה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DISABILITY_PERCENTAGE">אחוז נכות</label>
+            <input type="number" id="DISABILITY_PERCENTAGE" name="DISABILITY_PERCENTAGE" class="dashboard-input" min="0" max="100">
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Laboratory Results Section -->
+<section class="dashboard-section">
+    <h2>תוצאות מעבדה</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="BLOOD_TYPE">סוג דם</label>
+            <select id="BLOOD_TYPE" name="BLOOD_TYPE" class="dashboard-select">
+                <option value="">בחר</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="HEMOGLOBIN">המוגלובין (g/dL)</label>
+            <input type="number" id="HEMOGLOBIN" name="HEMOGLOBIN" class="dashboard-input" step="0.1">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="WHITE_BLOOD_CELLS">ספירת תאים לבנים</label>
+            <input type="number" id="WHITE_BLOOD_CELLS" name="WHITE_BLOOD_CELLS" class="dashboard-input" step="0.1">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PLATELETS">טסיות</label>
+            <input type="number" id="PLATELETS" name="PLATELETS" class="dashboard-input">
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="CHOLESTEROL">כולסטרול כללי</label>
+            <input type="number" id="CHOLESTEROL" name="CHOLESTEROL" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="HDL">HDL</label>
+            <input type="number" id="HDL" name="HDL" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="LDL">LDL</label>
+            <input type="number" id="LDL" name="LDL" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="TRIGLYCERIDES">טריגליצרידים</label>
+            <input type="number" id="TRIGLYCERIDES" name="TRIGLYCERIDES" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Vital Signs Section -->
+<section class="dashboard-section">
+    <h2>סימנים חיוניים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="BLOOD_PRESSURE_SYSTOLIC">לחץ דם סיסטולי</label>
+            <input type="number" id="BLOOD_PRESSURE_SYSTOLIC" name="BLOOD_PRESSURE_SYSTOLIC" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="BLOOD_PRESSURE_DIASTOLIC">לחץ דם דיאסטולי</label>
+            <input type="number" id="BLOOD_PRESSURE_DIASTOLIC" name="BLOOD_PRESSURE_DIASTOLIC" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="HEART_RATE">דופק</label>
+            <input type="number" id="HEART_RATE" name="HEART_RATE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="TEMPERATURE">חום</label>
+            <input type="number" id="TEMPERATURE" name="TEMPERATURE" class="dashboard-input" step="0.1">
+        </div>
+    </div>
+</section>
+
+<!-- Physical Measurements Section -->
+<section class="dashboard-section">
+    <h2>מדדים פיזיים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="HEIGHT">גובה (ס"מ)</label>
+            <input type="number" id="HEIGHT" name="HEIGHT" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="WEIGHT">משקל (ק"ג)</label>
+            <input type="number" id="WEIGHT" name="WEIGHT" class="dashboard-input" step="0.1">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="BMI">BMI</label>
+            <input type="number" id="BMI" name="BMI" class="dashboard-input" readonly>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="WAIST_CIRCUMFERENCE">היקף מותניים (ס"מ)</label>
+            <input type="number" id="WAIST_CIRCUMFERENCE" name="WAIST_CIRCUMFERENCE" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Contacts Section -->
+<section class="dashboard-section">
+    <h2>אנשי קשר לשעת חירום</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_NAME">שם איש קשר 1</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_NAME" name="EMERGENCY_CONTACT_1_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_RELATION">קרבה</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_RELATION" name="EMERGENCY_CONTACT_1_RELATION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_PHONE">טלפון</label>
+            <input type="tel" id="EMERGENCY_CONTACT_1_PHONE" name="EMERGENCY_CONTACT_1_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_ADDRESS">כתובת</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_ADDRESS" name="EMERGENCY_CONTACT_1_ADDRESS" class="dashboard-input">
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_NAME">שם איש קשר 2</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_NAME" name="EMERGENCY_CONTACT_2_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_RELATION">קרבה</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_RELATION" name="EMERGENCY_CONTACT_2_RELATION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_PHONE">טלפון</label>
+            <input type="tel" id="EMERGENCY_CONTACT_2_PHONE" name="EMERGENCY_CONTACT_2_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_ADDRESS">כתובת</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_ADDRESS" name="EMERGENCY_CONTACT_2_ADDRESS" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Medical History Section -->
+<section class="dashboard-section">
+    <h2>היסטוריה רפואית</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="PAST_SURGERIES">ניתוחים בעבר</label>
+            <textarea id="PAST_SURGERIES" name="PAST_SURGERIES" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CHRONIC_CONDITIONS">מחלות כרוניות</label>
+            <textarea id="CHRONIC_CONDITIONS" name="CHRONIC_CONDITIONS" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALLERGIES">אלרגיות</label>
+            <textarea id="ALLERGIES" name="ALLERGIES" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CURRENT_MEDICATIONS">תרופות נוכחיות</label>
+            <textarea id="CURRENT_MEDICATIONS" name="CURRENT_MEDICATIONS" class="dashboard-input"></textarea>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="FAMILY_HISTORY">היסטוריה משפחתית</label>
+            <textarea id="FAMILY_HISTORY" name="FAMILY_HISTORY" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="GENETIC_CONDITIONS">מחלות גנטיות</label>
+            <textarea id="GENETIC_CONDITIONS" name="GENETIC_CONDITIONS" class="dashboard-input"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Lifestyle Section -->
+<section class="dashboard-section">
+    <h2>אורח חיים</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="SMOKING_STATUS">עישון</label>
+            <select id="SMOKING_STATUS" name="SMOKING_STATUS" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="NEVER">לא מעשן</option>
+                <option value="FORMER">מעשן לשעבר</option>
+                <option value="CURRENT">מעשן</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ALCOHOL_CONSUMPTION">צריכת אלכוהול</label>
+            <select id="ALCOHOL_CONSUMPTION" name="ALCOHOL_CONSUMPTION" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="NONE">לא שותה</option>
+                <option value="OCCASIONAL">לעיתים רחוקות</option>
+                <option value="REGULAR">באופן קבוע</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PHYSICAL_ACTIVITY">פעילות גופנית</label>
+            <select id="PHYSICAL_ACTIVITY" name="PHYSICAL_ACTIVITY" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="NONE">ללא</option>
+                <option value="LIGHT">קלה</option>
+                <option value="MODERATE">בינונית</option>
+                <option value="INTENSE">אינטנסיבית</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DIET_TYPE">סוג תזונה</label>
+            <select id="DIET_TYPE" name="DIET_TYPE" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="REGULAR">רגילה</option>
+                <option value="VEGETARIAN">צמחונית</option>
+                <option value="VEGAN">טבעונית</option>
+                <option value="KOSHER">כשרה</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Medical Information -->
+<section class="dashboard-section">
+    <h2>מידע רפואי נוסף</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="BLOOD_TYPE">סוג דם</label>
+            <select id="BLOOD_TYPE" name="BLOOD_TYPE" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ORGAN_DONOR">תורם איברים</label>
+            <select id="ORGAN_DONOR" name="ORGAN_DONOR" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MEDICAL_NOTES">הערות רפואיות</label>
+            <textarea id="MEDICAL_NOTES" name="MEDICAL_NOTES" class="dashboard-input"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Insurance Information -->
+<section class="dashboard-section">
+    <h2>פרטי ביטוח</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="INSURANCE_PROVIDER">קופת חולים</label>
+            <select id="INSURANCE_PROVIDER" name="INSURANCE_PROVIDER" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="CLALIT">כללית</option>
+                <option value="MACCABI">מכבי</option>
+                <option value="MEUHEDET">מאוחדת</option>
+                <option value="LEUMIT">לאומית</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="INSURANCE_NUMBER">מספר חבר</label>
+            <input type="text" id="INSURANCE_NUMBER" name="INSURANCE_NUMBER" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SUPPLEMENTARY_INSURANCE">ביטוח משלים</label>
+            <select id="SUPPLEMENTARY_INSURANCE" name="SUPPLEMENTARY_INSURANCE" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="YES">כן</option>
+                <option value="NO">לא</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Employment Information -->
+<section class="dashboard-section">
+    <h2>מידע תעסוקתי</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMPLOYER_NAME">שם המעסיק</label>
+            <input type="text" id="EMPLOYER_NAME" name="EMPLOYER_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="JOB_TITLE">תפקיד</label>
+            <input type="text" id="JOB_TITLE" name="JOB_TITLE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="WORK_ADDRESS">כתובת העבודה</label>
+            <input type="text" id="WORK_ADDRESS" name="WORK_ADDRESS" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="WORK_PHONE">טלפון בעבודה</label>
+            <input type="tel" id="WORK_PHONE" name="WORK_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMPLOYMENT_START_DATE">תאריך תחילת עבודה</label>
+            <input type="date" id="EMPLOYMENT_START_DATE" name="EMPLOYMENT_START_DATE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMPLOYMENT_STATUS">סטטוס תעסוקה</label>
+            <select id="EMPLOYMENT_STATUS" name="EMPLOYMENT_STATUS" class="dashboard-input">
+                <option value="">בחר</option>
+                <option value="FULL_TIME">משרה מלאה</option>
+                <option value="PART_TIME">משרה חלקית</option>
+                <option value="CONTRACTOR">קבלן</option>
+                <option value="UNEMPLOYED">לא מועסק</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Contacts -->
+<section class="dashboard-section">
+    <h2>אנשי קשר לשעת חירום</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_NAME">שם איש קשר 1</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_NAME" name="EMERGENCY_CONTACT_1_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_RELATION">קרבה</label>
+            <input type="text" id="EMERGENCY_CONTACT_1_RELATION" name="EMERGENCY_CONTACT_1_RELATION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_1_PHONE">טלפון</label>
+            <input type="tel" id="EMERGENCY_CONTACT_1_PHONE" name="EMERGENCY_CONTACT_1_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_NAME">שם איש קשר 2</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_NAME" name="EMERGENCY_CONTACT_2_NAME" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_RELATION">קרבה</label>
+            <input type="text" id="EMERGENCY_CONTACT_2_RELATION" name="EMERGENCY_CONTACT_2_RELATION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT_2_PHONE">טלפון</label>
+            <input type="tel" id="EMERGENCY_CONTACT_2_PHONE" name="EMERGENCY_CONTACT_2_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+    </div>
+</section>
+
+<!-- Vehicle Information -->
+<section class="dashboard-section">
+    <h2>פרטי רכב</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="VEHICLE_LICENSE_NUMBER">מספר רישוי</label>
+            <input type="text" id="VEHICLE_LICENSE_NUMBER" name="VEHICLE_LICENSE_NUMBER" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VEHICLE_MANUFACTURER">יצרן</label>
+            <input type="text" id="VEHICLE_MANUFACTURER" name="VEHICLE_MANUFACTURER" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VEHICLE_MODEL">דגם</label>
+            <input type="text" id="VEHICLE_MODEL" name="VEHICLE_MODEL" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VEHICLE_COLOR">צבע</label>
+            <input type="text" id="VEHICLE_COLOR" name="VEHICLE_COLOR" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PARKING_SPOT">מספר חניה</label>
+            <input type="text" id="PARKING_SPOT" name="PARKING_SPOT" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Additional Information -->
+<section class="dashboard-section">
+    <h2>מידע נוסף</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="HOBBIES">תחביבים</label>
+            <textarea id="HOBBIES" name="HOBBIES" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SKILLS">כישורים מיוחדים</label>
+            <textarea id="SKILLS" name="SKILLS" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="COMMENTS">הערות כלליות</label>
+            <textarea id="COMMENTS" name="COMMENTS" class="dashboard-input"></textarea>
+        </div>
+    </div>
+</section><!-- Professional Information -->
+<section class="dashboard-section">
+    <h2>מידע מקצועי</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="PROFESSIONAL_LICENSE">מספר רישיון מקצועי</label>
+            <input type="text" id="PROFESSIONAL_LICENSE" name="PROFESSIONAL_LICENSE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="LICENSE_EXPIRY">תאריך תפוגת רישיון</label>
+            <input type="date" id="LICENSE_EXPIRY" name="LICENSE_EXPIRY" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CERTIFICATIONS">תעודות והסמכות</label>
+            <textarea id="CERTIFICATIONS" name="CERTIFICATIONS" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SPECIALIZATIONS">התמחויות</label>
+            <textarea id="SPECIALIZATIONS" name="SPECIALIZATIONS" class="dashboard-input"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Employment History -->
+<section class="dashboard-section">
+    <h2>היסטוריית תעסוקה</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="PREVIOUS_EMPLOYER">מעסיק קודם</label>
+            <input type="text" id="PREVIOUS_EMPLOYER" name="PREVIOUS_EMPLOYER" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PREVIOUS_POSITION">תפקיד קודם</label>
+            <input type="text" id="PREVIOUS_POSITION" name="PREVIOUS_POSITION" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMPLOYMENT_START_DATE">תאריך תחילת העסקה</label>
+            <input type="date" id="EMPLOYMENT_START_DATE" name="EMPLOYMENT_START_DATE" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMPLOYMENT_END_DATE">תאריך סיום העסקה</label>
+            <input type="date" id="EMPLOYMENT_END_DATE" name="EMPLOYMENT_END_DATE" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- System Access -->
+<section class="dashboard-section">
+    <h2>גישה למערכת</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="SYSTEM_USERNAME">שם משתמש</label>
+            <input type="text" id="SYSTEM_USERNAME" name="SYSTEM_USERNAME" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ACCESS_LEVEL">רמת הרשאה</label>
+            <select id="ACCESS_LEVEL" name="ACCESS_LEVEL" class="dashboard-input">
+                <option value="1">בסיסית</option>
+                <option value="2">מתקדמת</option>
+                <option value="3">מנהל</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DEPARTMENT_ACCESS">גישה למחלקות</label>
+            <select id="DEPARTMENT_ACCESS" name="DEPARTMENT_ACCESS" class="dashboard-input" multiple>
+                <option value="HR">משאבי אנוש</option>
+                <option value="FINANCE">כספים</option>
+                <option value="OPERATIONS">תפעול</option>
+                <option value="IT">מערכות מידע</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+</body>
+</html><!-- Security Settings -->
+<section class="dashboard-section">
+    <h2>הגדרות אבטחה</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="2FA_ENABLED">אימות דו-שלבי</label>
+            <select id="2FA_ENABLED" name="2FA_ENABLED" class="dashboard-input">
+                <option value="1">מופעל</option>
+                <option value="0">כבוי</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SECURITY_QUESTION">שאלת אבטחה</label>
+            <select id="SECURITY_QUESTION" name="SECURITY_QUESTION" class="dashboard-input">
+                <option value="1">שם חיית המחמד הראשונה שלך</option>
+                <option value="2">שם בית הספר היסודי</option>
+                <option value="3">עיר הולדת אמך</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="SECURITY_ANSWER">תשובת אבטחה</label>
+            <input type="password" id="SECURITY_ANSWER" name="SECURITY_ANSWER" class="dashboard-input">
+        </div>
+    </div>
+</section>
+
+<!-- Additional Information -->
+<section class="dashboard-section">
+    <h2>מידע נוסף</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_CONTACT">איש קשר לשעת חירום</label>
+            <input type="text" id="EMERGENCY_CONTACT" name="EMERGENCY_CONTACT" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="EMERGENCY_PHONE">טלפון חירום</label>
+            <input type="tel" id="EMERGENCY_PHONE" name="EMERGENCY_PHONE" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="BLOOD_TYPE">סוג דם</label>
+            <select id="BLOOD_TYPE" name="BLOOD_TYPE" class="dashboard-input">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="MEDICAL_CONDITIONS">מצב רפואי מיוחד</label>
+            <textarea id="MEDICAL_CONDITIONS" name="MEDICAL_CONDITIONS" class="dashboard-input"></textarea>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="PARKING_SPOT">מספר חניה</label>
+            <input type="text" id="PARKING_SPOT" name="PARKING_SPOT" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="VEHICLE_NUMBER">מספר רכב</label>
+            <input type="text" id="VEHICLE_NUMBER" name="VEHICLE_NUMBER" class="dashboard-input" dir="ltr">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ADDITIONAL_NOTES">הערות נוספות</label>
+            <textarea id="ADDITIONAL_NOTES" name="ADDITIONAL_NOTES" class="dashboard-input"></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- Preferences -->
+<section class="dashboard-section">
+    <h2>העדפות</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="PREFERRED_LANGUAGE">שפה מועדפת</label>
+            <select id="PREFERRED_LANGUAGE" name="PREFERRED_LANGUAGE" class="dashboard-input">
+                <option value="HE">עברית</option>
+                <option value="EN">English</option>
+                <option value="AR">العربية</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="NOTIFICATION_PREFERENCES">העדפות התראות</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="EMAIL_NOTIFICATIONS" name="NOTIFICATION_PREFERENCES" value="email">
+                <label for="EMAIL_NOTIFICATIONS">דוא"ל</label>
+                <input type="checkbox" id="SMS_NOTIFICATIONS" name="NOTIFICATION_PREFERENCES" value="sms">
+                <label for="SMS_NOTIFICATIONS">SMS</label>
+                <input type="checkbox" id="PUSH_NOTIFICATIONS" name="NOTIFICATION_PREFERENCES" value="push">
+                <label for="PUSH_NOTIFICATIONS">התראות דחיפה</label>
+            </div>
+        </div>
+    </div>
+</section><!-- System Settings -->
+<section class="dashboard-section">
+    <h2>הגדרות מערכת</h2>
+    <div class="dashboard-grid">
+        <div class="dashboard-form-group">
+            <label for="TIME_ZONE">אזור זמן</label>
+            <select id="TIME_ZONE" name="TIME_ZONE" class="dashboard-input">
+                <option value="Asia/Jerusalem">ישראל (GMT+3)</option>
+                <option value="Europe/London">לונדון (GMT)</option>
+                <option value="America/New_York">ניו יורק (GMT-5)</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DATE_FORMAT">פורמט תאריך</label>
+            <select id="DATE_FORMAT" name="DATE_FORMAT" class="dashboard-input">
+                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="CURRENCY">מטבע ברירת מחדל</label>
+            <select id="CURRENCY" name="CURRENCY" class="dashboard-input">
+                <option value="ILS">₪ - שקל</option>
+                <option value="USD">$ - דולר</option>
+                <option value="EUR">€ - יורו</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DEFAULT_VIEW">תצוגת ברירת מחדל</label>
+            <select id="DEFAULT_VIEW" name="DEFAULT_VIEW" class="dashboard-input">
+                <option value="dashboard">לוח בקרה</option>
+                <option value="calendar">לוח שנה</option>
+                <option value="list">רשימה</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="AUTO_REFRESH">רענון אוטומטי (דקות)</label>
+            <input type="number" id="AUTO_REFRESH" name="AUTO_REFRESH" min="1" max="60" class="dashboard-input">
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="RECORDS_PER_PAGE">רשומות לעמוד</label>
+            <select id="RECORDS_PER_PAGE" name="RECORDS_PER_PAGE" class="dashboard-input">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="DATA_EXPORT_FORMAT">פורמט ייצוא נתונים</label>
+            <select id="DATA_EXPORT_FORMAT" name="DATA_EXPORT_FORMAT" class="dashboard-input">
+                <option value="excel">Excel</option>
+                <option value="csv">CSV</option>
+                <option value="pdf">PDF</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="THEME">ערכת נושא</label>
+            <select id="THEME" name="THEME" class="dashboard-input">
+                <option value="light">בהיר</option>
+                <option value="dark">כהה</option>
+                <option value="auto">אוטומטי</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="ACCESSIBILITY">נגישות</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="HIGH_CONTRAST" name="ACCESSIBILITY" value="high_contrast">
+                <label for="HIGH_CONTRAST">ניגודיות גבוהה</label>
+                <input type="checkbox" id="LARGE_TEXT" name="ACCESSIBILITY" value="large_text">
+                <label for="LARGE_TEXT">טקסט מוגדל</label>
+            </div>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="BACKUP_FREQUENCY">תדירות גיבוי</label>
+            <select id="BACKUP_FREQUENCY" name="BACKUP_FREQUENCY" class="dashboard-input">
+                <option value="daily">יומי</option>
+                <option value="weekly">שבועי</option>
+                <option value="monthly">חודשי</option>
+            </select>
+        </div>
+
+        <div class="dashboard-form-group">
+            <label for="LOG_LEVEL">רמת יומן</label>
+            <select id="LOG_LEVEL" name="LOG_LEVEL" class="dashboard-input">
+                <option value="error">שגיאות</option>
+                <option value="warning">אזהרות</option>
+                <option value="info">מידע</option>
+                <option value="debug">ניפוי באגים</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

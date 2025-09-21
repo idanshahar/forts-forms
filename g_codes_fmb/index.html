@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G_CODES</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <!-- HEADER Block -->
+        <section class="dashboard-header-block">
+            <h2 class="dashboard-block-title">ניהול קודים</h2>
+            
+            <div class="dashboard-form-group">
+                <label for="tab_no">טבלה מספר</label>
+                <div class="dashboard-input-group">
+                    <input type="text" id="tab_no" name="tab_no" 
+                           class="dashboard-input"
+                           maxlength="4" required>
+                    <button class="dashboard-btn dashboard-btn-secondary" id="tab_no_lov">...</button>
+                </div>
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="tab_desc">תיאור טבלה</label>
+                <input type="text" id="tab_desc" name="tab_desc"
+                       class="dashboard-input dashboard-readonly" 
+                       maxlength="80" readonly>
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="code">קוד</label>
+                <div class="dashboard-input-group">
+                    <input type="text" id="code" name="code"
+                           class="dashboard-input"
+                           maxlength="10">
+                    <button class="dashboard-btn dashboard-btn-secondary" id="code_lov">...</button>
+                </div>
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="c_desc">תיאור</label>
+                <div class="dashboard-input-group">
+                    <input type="text" id="c_desc" name="c_desc"
+                           class="dashboard-input"
+                           maxlength="70">
+                    <button class="dashboard-btn dashboard-btn-secondary" id="c_desc_lov">...</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CODES Block -->
+        <section class="dashboard-data-block">
+            <div class="dashboard-form-group">
+                <label for="code_sort">מספר מיון</label>
+                <input type="number" id="code_sort" name="code_sort"
+                       class="dashboard-input"
+                       maxlength="6">
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="code_sort2">מספר מיון 2</label>
+                <input type="number" id="code_sort2" name="code_sort2"
+                       class="dashboard-input"
+                       maxlength="6">
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="code_sort3">מספר מיון אלטרנטיבי</label>
+                <input type="number" id="code_sort3" name="code_sort3"
+                       class="dashboard-input"
+                       maxlength="6">
+            </div>
+
+            <div class="dashboard-form-group">
+                <label for="code_desc_e">תיאור באנגלית</label>
+                <input type="text" id="code_desc_e" name="code_desc_e"
+                       class="dashboard-input"
+                       maxlength="70">
+            </div>
+
+            <div class="dashboard-form-group">
+                <label class="dashboard-checkbox-label">
+                    <input type="checkbox" id="hard_code_yn" name="hard_code_yn"
+                           class="dashboard-checkbox">
+                    קוד קשיח
+                </label>
+            </div>
+
+            <div class="dashboard-form-group">
+                <label class="dashboard-checkbox-label">
+                    <input type="checkbox" id="code_inactive" name="code_inactive"
+                           class="dashboard-checkbox">
+                    לא פעיל
+                </label>
+            </div>
+        </section>
+
+        <div class="dashboard-button-group">
+            <button class="dashboard-btn dashboard-btn-primary" id="but_query">חיפוש</button>
+            <button class="dashboard-btn dashboard-btn-secondary" id="print">הדפסה</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const tabNo = document.getElementById('tab_no');
+            
+            tabNo.addEventListener('change', async function() {
+                if (this.value) {
+                    try {
+                        // Simulate database lookup
+                        const tabDesc = document.getElementById('tab_desc');
+                        tabDesc.value = await getTabDescription(this.value);
+                    } catch(err) {
+                        alert('שגיאה בטעינת תיאור הטבלה');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html><!-- Ownership Block -->
+<section class="dashboard-data-block">
+    <div class="dashboard-form-group">
+        <label for="owner_dept">מחלקה אחראית</label>
+        <input type="text" id="owner_dept" name="owner_dept" 
+               class="dashboard-input" maxlength="3">
+        <button class="dashboard-btn dashboard-btn-secondary" id="owner_dept_lov">...</button>
+    </div>
+
+    <div class="dashboard-form-group">
+        <label for="owner_dept_desc">תיאור מחלקה</label>
+        <input type="text" id="owner_dept_desc" name="owner_dept_desc"
+               class="dashboard-input" readonly maxlength="40">
+    </div>
+</section>
+
+<!-- Audit Fields Block -->
+<section class="dashboard-data-block">
+    <div class="dashboard-form-group">
+        <label for="created_by">נוצר ע"י</label>
+        <input type="text" id="created_by" name="created_by"
+               class="dashboard-input" readonly maxlength="30">
+    </div>
+
+    <div class="dashboard-form-group">
+        <label for="created_date">תאריך יצירה</label>
+        <input type="text" id="created_date" name="created_date"
+               class="dashboard-input" readonly>
+    </div>
+
+    <div class="dashboard-form-group">
+        <label for="last_updated_by">עודכן ע"י</label>
+        <input type="text" id="last_updated_by" name="last_updated_by"
+               class="dashboard-input" readonly maxlength="30">
+    </div>
+
+    <div class="dashboard-form-group">
+        <label for="last_update_date">תאריך עדכון</label>
+        <input type="text" id="last_update_date" name="last_update_date"
+               class="dashboard-input" readonly>
+    </div>
+
+    <div class="dashboard-form-group">
+        <label for="remark">הערות</label>
+        <textarea id="remark" name="remark" 
+                  class="dashboard-textarea"
+                  maxlength="2000" rows="3"></textarea>
+    </div>
+</section>

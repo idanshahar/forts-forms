@@ -1,0 +1,216 @@
+:root {
+  --primary: #e91e63;
+  --primary-light: #f27595;
+  --primary-dark: #b31849;
+  --primary-hover: #d31557;
+  --secondary: #7b809a;
+  --secondary-light: #99a1b7;
+  --secondary-dark: #646981;
+  --accent: #344767;
+  --error: #dc3545;
+  --warning: #ffc107;
+  --success: #198754;
+  --info: #17c1e8;
+  --background: #f0f2f5;
+  --surface: #ffffff;
+  --surface-hover: #f8f9fa;
+  --text-primary: rgba(52, 71, 103, 0.87);
+  --text-secondary: rgba(52, 71, 103, 0.6);
+  --text-disabled: rgba(52, 71, 103, 0.38);
+  --border-default: #dee2e6;
+  --border-focus: #e91e63;
+}
+
+.dashboard-body {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--background);
+}
+
+.dashboard-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.dashboard-form-group {
+  margin-bottom: 1rem;
+}
+
+.dashboard-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--surface);
+  border: 1px solid var(--border-default);
+  border-radius: 0.375rem;
+  transition: border-color 0.25s ease-in-out;
+}
+
+.dashboard-input:focus {
+  border-color: var(--border-focus);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(233, 30, 99, 0.25);
+}
+
+.dashboard-input.error {
+  border-color: var(--error);
+}
+
+.dashboard-btn {
+  display: inline-block;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.dashboard-btn-primary {
+  color: #ffffff;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.dashboard-btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.dashboard-btn-secondary {
+  color: #ffffff;
+  background-color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+.dashboard-btn-secondary:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
+}
+
+.dashboard-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.dashboard-table th {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dashboard-header-block {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+.dashboard-data-block {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+.dashboard-checkbox {
+  margin-right: 0.5rem;
+}
+
+.dashboard-footer {
+  padding: 1.5rem;
+  margin-top: 3rem;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border-default);
+}
+
+/* RTL Support */
+[dir="rtl"] .dashboard-container {
+  text-align: right;
+}
+
+[dir="rtl"] .dashboard-checkbox {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+/* Dark Theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1f33;
+    --surface: #273045;
+    --surface-hover: #2c3752;
+    --text-primary: rgba(255, 255, 255, 0.87);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-disabled: rgba(255, 255, 255, 0.38);
+    --border-default: #344767;
+  }
+}
+
+/* Responsive Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Validation States */
+.dashboard-input.valid {
+  border-color: var(--success);
+}
+
+.dashboard-input.invalid {
+  border-color: var(--error);
+}
+
+.dashboard-error-message {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.dashboard-success-message {
+  color: var(--success);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Accessibility Focus Styles */
+.dashboard-btn:focus,
+.dashboard-input:focus,
+.dashboard-checkbox:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+[data-theme="contrast"] {
+  --primary: #ff1744;
+  --secondary: #90a4ae;
+  --text-primary: #ffffff;
+  --background: #000000;
+  --surface: #121212;
+}

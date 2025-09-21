@@ -1,0 +1,6 @@
+{
+  "fields_expected": 192,
+  "fields_generated": 182,
+  "coverage": "94.8%",
+  "continuation_used": true
+}

@@ -1,0 +1,536 @@
+{
+  "triggers": [
+    {
+      "name": "KEY-LISTVAL",
+      "code": "clear_item;\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "check_mandatory('N','N');\nnext_item;\nif FORM_SUCCESS then\n\tnext_item;\nend if;\n\n\n"
+    },
+    {
+      "name": "WHEN-NEW-ITEM-INSTANCE",
+      "code": "if :parameter.pr_surgery_block = 'NO' then \nif :global.pr_waiting ='YES' and :global.pr_booking_no is not null then\nclear_form(no_validate);\n:parameter.pr_booking_no:=:global.pr_booking_no;\n:parameter.pr_waiting:='NO';\n:global.pr_booking_no:=null;\nexecute_query; \nend if;\nend if;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "list_values;\n--if :b1.err_flag is null then    \n--  chk_counter;\n--end if;\nif :booking.client_no is not null then\n\tprevious_item;\n  next_item;\nend if;\n\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "do_key('next_item');"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": ":booking.date_update:=sysdate;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "\nselect :arv_date + to_char(:arv_time,'SSSSS')/86400\ninto :B_ARRV_TIME\nfrom dual;\n\n\n:booking.date_update:=sysdate;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :C_CHILDREN_FLAG is not null then \n  check_mandatory('B_ID_TYPE','GO');  \nend if;\t\nnext_item;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "\t if :C_CHILDREN_FLAG is not null and  :BOOKING.b_id='0' then \n\t    errors(2064,'e');\n\t end if;\n\t \n\t \n\tif :C_BAR_CODE ='1' and :b_id_type=DBF_GET_SPECIAL_PARAM_VAL('ID_DOC_TYPE') then \n\t\tset_item_property('B_SICK_FUND', visual_attribute, 'VA_ITEM_MANDATORY');  \n\telse\n\t\t\tset_item_property('B_SICK_FUND', visual_attribute, 'VA_ITEM'); \n\tend if;\n\t\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "declare\n\tx varchar2(30);\n\tL_BUTT number;\nbegin\n\tif :b_id is not null and :B_NAME  is null and :B_FIRST_NAME is null then \n\t\t\tlo_find_patient (x,x,x,:b_id);\n\tend if;\n\t\nif :C_CHILDREN_FLAG is not null then \n  --check_mandatory('B_ID_TYPE','GO');  \n  check_mandatory('B_ID','GO');  \t\t\n end if;\t\nnext_item;\n\n\nend;\n"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :BOOKING.b_id_type = '1'  then\n\t if :C_CHILDREN_FLAG is not null and  :BOOKING.b_id='0' then \n\t    errors(2064,'e');\n   end if;\n   lo_check_id_no(:BOOKING.b_id,'e');\nend if;\n\n\n\tif :C_BAR_CODE ='1' and :b_id_type=DBF_GET_SPECIAL_PARAM_VAL('ID_DOC_TYPE') then \n\t\tset_item_property('B_SICK_FUND', visual_attribute, 'VA_ITEM_MANDATORY');  \n\telse\n\t\t\tset_item_property('B_SICK_FUND', visual_attribute, 'VA_ITEM'); \n\tend if;\n\t\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": " -- if :B_HTEL is null and  :B_WTEL is null and :B_CELL is null and :c_chq_ltr=1 then \n --   errors(748, 'e');\n  --  raise form_trigger_failure;\n -- else\n  \tnext_item;\n -- end if; "
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "declare\n\tx varchar2(30);\n\tL_BUTT number;\nbegin\n--\tif :B_HTEL is not null and  :B_NAME  is null and :B_FIRST_NAME is null  then \n--\t\t\tlo_find_patient (:B_HTEL,x,x,x);\n---\tend if;\n\t\nnext_item;\nend;"
+    },
+    {
+      "name": "WHEN-NEW-ITEM-INSTANCE",
+      "code": "if :parameter.pr_surgery_block = 'YES' then \nif :global.pr_waiting ='YES' and :global.pr_booking_no is not null then\nclear_form(no_validate);\n:parameter.pr_booking_no:=:global.pr_booking_no;\n--:parameter.pr_waiting:='NO';\n--:global.pr_booking_no:=null;\nexecute_query; \nend if;\nend if;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "declare\n\tx varchar2(30);\n\tL_BUTT number;\nbegin\n \n ---\tif :B_wtel is not null and  :B_NAME  is null and :B_FIRST_NAME is null  then \n---\t\tlo_find_patient (x,:B_wtel,x,x);\n---\tend if; \nnext_item;\nend;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "declare\n\tx varchar2(30);\n\tL_BUTT number;\n\ty number;\nbegin\n\n\t--\tif :B_cell is not null and  :B_NAME  is null and :B_FIRST_NAME is null then \n\t--\t\tlo_find_patient (x,x,:B_cell,x);\n---\t\tend if;\n\t\tif :b_cell is not null then \n\t\t\tif  :b_id_type = '1' then \n\t\t\t   \ty:=\tDBF_CHECK_MOBILE_PHONE(:b_cell);\n\t\t      if y != 0 then \t\t\t\n\t\t\t       errors(y,'e');\n\t\t      end if;\t\n\t\t  else\n\t\t      if  dbf_a_check_if_number(:b_cell)='N'  then\n\t\t\t\t  \terrors(11093,'e');\n\t\t     end if;    \t\n\t\t  end if;\n\t\tend if;\n\t\t\n\t\t\n\t\t\n\t\t if :B_HTEL is null and  :B_WTEL is null and :B_CELL is null and :c_chq_ltr=1 then \n   errors(748, 'e');\n   raise form_trigger_failure;\nend if;\n\t\t\n\t\tif :B_cell is not null then\t\n       next_item;\n\t\telse\n\t\tnext_item;\n\t\tnext_item;\n\t\tend if;\t\nend;\n"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "declare\n\tx varchar2(30);\n\tL_BUTT number;\n\ty number;\nbegin\n\t\tif :b_cell is not null then \n\t\t\tif  :b_id_type = '1' then \n\t\t\t   \ty:=\tDBF_CHECK_MOBILE_PHONE(:b_cell);\n\t\t      if y != 0 then \t\t\t\n\t\t\t       errors(y,'e');\n\t\t      end if;\t\n\t\t  else\n\t\t      if  dbf_a_check_if_number(:b_cell)='N'  then\n\t\t\t\t  \terrors(11093,'e');\n\t\t     end if;    \t\n\t\t  end if;\n\tend if;\nend;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :C_MARITAL_STATUS is not null then \n  \t check_mandatory('N','N');  \t\nend if;\t\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :B_con_name is null then \n\tgo_item('booking.b_sick_fund');\nelse\n\tnext_item;\nend if;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "IF :BOOKING.b_email IS NOT NULL THEN\n    DECLARE l_ret VARCHAR2(80);\n    BEGIN\n        l_ret := DBF_VALIDATE_EMAIL_ADDRESS(:BOOKING.b_email);\n        IF l_ret = 'INVALID' THEN\n            errors(10860,'e');\n        END IF;\n    END;\nEND IF;\n"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "get_code_info('179',:b_status,:b_status_desc,'ERR');"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "next_item;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "clear_item;\nnext_item;\nclear_item;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "next_item;\t\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :booking.emp_no is null then\n\t\nlist_values;\nprevious_item;\nelse\n  nexT_item;\nend if;\n\t"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;"
+    },
+    {
+      "name": "WHEN-NEW-ITEM-INSTANCE",
+      "code": "if :parameter.pr_spincal_type= 'doctor' then next_item; end if;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :booking.B_SICK_FUNd is not null then\n\tget_code_info('386',:booking.B_SICK_FUNd,:booking.B_SICK_FUNd_d,'ERR');\nend if;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "--pop_help('CODES', :dummy_N,  :booking.B_SICK_FUNd,   :booking.B_SICK_FUNd_d,  '386',  '');\n :dummy_n:=386;\n list_values;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :C_BAR_CODE ='1' and :b_id_type = DBF_GET_SPECIAL_PARAM_VAL('ID_DOC_TYPE') then\n\t check_mandatory('N','N');\nend if;\nnext_item;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :client_payer is not null then\nbegin\n\t select c_name\n\t into :client_payer_d\n\t from client\n\t where c_type = 82 and c_status ='�'\n\t and client_no = :client_payer;\n\t \nexception\n\t when no_data_found then \n\t   errors(1613,'e');\nend;\nend if;\n\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "clear_item;\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :c_law_status is not null then \ncheck_mandatory('N','N');\nend if;\nnext_item;\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "list_values;\nif :C_law_status is not null then \n  check_mandatory('CLIENT_PAYER','GO');  \t\nend if;\t\nnext_item;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "--list_values;\nclear_item;\nnext_item;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :b_dept is not null then\nbegin\n\t select c_name\n\t into :b_dept_d\n\t from client\n\t where c_type = 81 and c_status ='�'\n\t and client_no = :b_dept;\n\t \nexception\n\t when no_data_found then \n\t   errors(1613,'e');\nend;\nend if;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :c_cell_prefix is not null then \ncheck_mandatory('N','N');\nend if;\nnext_item;\nnext_item;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "list_values;\nif :C_cell_prefix is not null then \n  check_mandatory('B_dept','GO');  \t\nend if;\t\n  next_item;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "--go_block('BOOKING_ACTIVITY');\nnext_item;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :booking.pf_refer_type is not null then\n\tset_properties('booking.PF_REFER_CODE','TRUE');\n\tset_properties('booking.PF_REFER_DESC','TRUE');\n\tif get_item_property('booking.PF_REFER_CODE',visual_attribute) != 'VA_ITEM_MANDATORY_RED' then\n  \tset_item_property('booking.PF_REFER_CODE',visual_attribute,'VA_ITEM_MANDATORY');\n  end if;\n\t--if :booking.pf_refer_type in ('1','2','3','5','6') then --rachel\n\tif :booking.pf_refer_type not  in ('4') then\n\t\tset_item_property('booking.REFER_CODE',visible,property_false);\n\t\tset_item_property('booking.REFER_DESC',visible,property_false);\n\t\tset_item_property('booking.REFER_CODE_LOV',visible,property_false);\n\n\t  if :booking.pf_refer_type = '1' then      -- ����\n      set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE1');\n\t  elsif :booking.pf_refer_type = '2' then   -- ���\n      set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE2');\n    elsif :booking.pf_refer_type = '3' then   -- ������\n      set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE3');\n    elsif :booking.pf_refer_type = '6' then  -- �����\n    \tset_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE6');\n    else ---if :booking.pf_refer_type = '5' then\n    \tset_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE5');\n    end if;\n  else  -- ���� �����\n    set_item_property('booking.REFER_CODE',visible,property_true);\n    set_properties('booking.REFER_CODE','TRUE');\n    set_item_property('booking.REFER_DESC',visible,property_true);\n\t\tset_item_property('booking.REFER_CODE_LOV',visible,property_true);\n\t\tset_item_property('booking.REFER_CODE_LOV',enabled,property_true);\n\t\t\n\t\tset_item_property('booking.REFER_CODE',visual_attribute,'VA_ITEM_MANDATORY');\n\t\t\n\t\tset_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE4');\t\n\n    --:booking.refer_code := :booking.pf_sick_fund;\n  end if;\nelse\n\tset_properties('booking.PF_REFER_CODE','FALSE');\n\tset_properties('booking.PF_REFER_DESC','FALSE');\n  set_item_property('booking.PF_REFER_CODE',visual_attribute,'VA_ITEM');\n  \n  set_item_property('booking.REFER_CODE',visible,property_false);\n\tset_item_property('booking.REFER_DESC',visible,property_false);\n\tset_item_property('booking.REFER_CODE_LOV',visible,property_false);\nend if;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if get_item_property('booking.PF_REFER_TYPE',visual_attribute) = 'VA_ITEM_MANDATORY' then\n\tcheck_mandatory('N','N');\nend if;\nif :booking.pf_refer_type is null then\n\tgo_item('booking.PF_CODE');\nelse\n\tnext_item;\nend if;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :booking.pf_refer_type = '4' then\nif :booking.refer_code is not null then\n\tget_code_info('386',:booking.refer_code,:booking.refer_desc,'ERR');\nend if;\nend if;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "--pop_help('CODES', :dummy_N,  :booking.refer_code,   :booking.refer_desc,  '386',  '');\n :dummy_n:=386;\n list_values;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "check_mandatory('N','N');\nnext_item;"
+    },
+    {
+      "name": "KEY-DUP-ITEM",
+      "code": "declare dummy_c    varchar2(80);\n\t      dummy_n    number(38);\n\t      dummy_d    date;\n\t      first_name varchar2(80);\n\t      last_name  varchar2(80);\nBegin\n\tif :booking.pf_refer_type = '6' then\n    default_value('', 'global.patient_no') ;\n    default_value('', 'global.patient_type') ;\n    :global.patient_type := :booking.b_id_type;\n    CALL_FORM ('h_patient',HIDE,DO_REPLACE,QUERY_ONLY);\n    WINDOW_TITLE('����� - 2010 - �����');\n    if :global.patient_no is not null then\n \t   get_patient_data (to_number(:global.patient_no),dummy_c,\n\t                      dummy_c,first_name,last_name,dummy_c,dummy_d,dummy_c,\n\t  \t                  dummy_c,dummy_c,dummy_c,dummy_c,dummy_n,dummy_c,\n\t                      dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_d,\n\t                      dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,'ERR'); \n\t                      \n\t    :booking.pf_refer_code := to_number(:global.patient_no);                \n\t    :booking.pf_refer_desc := first_name || ' ' || last_name;  \n    end if;\n  end if;\nEnd;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if get_item_property('booking.PF_REFER_CODE',visual_attribute) = 'VA_ITEM_MANDATORY' or \n\t                                                    :booking.pf_refer_type is not null then\n\tcheck_mandatory('N','N');\nend if;\nnext_item;\n"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :booking.pf_refer_code is not null then\n  get_refer('ERR');\nend if;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "clear_item;\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :booking.pf_refer_type = '6' then\n\tcheck_mandatory('N','N');\nend if;\nlist_values;\n/*\nif :booking.pf_refer_code is not null then\n  go_item('booking.pf_refer_type'); --PATIENT_FILE.EMP_NO');\nelse\n\t:booking.pf_refer_desc := null;\n\tprevious_item;\nend if;\n*/\nnext_item;\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "/*list_values;\ngo_item('PATIENT_FILE.PF_SICK_FUND'); */\ndo_key('next_item');"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :booking.pf_code is not null then\n\tget_code_info('395',:booking.pf_code,:booking.pf_code_desc,'ERR');\nend if;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if get_item_property('booking.PF_CODE',visual_attribute) = 'VA_ITEM_MANDATORY' then\n\tcheck_mandatory('N','N');\nend if;\n---XXXgo_item('booking.EMP_NO');\n--go_item('booking.pf_refer_type');\n--next_item;\nnext_block;"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": " :dummy_n:=395;\n list_values;\n--pop_help('CODES',:dummy_N,:booking.pf_code,:booking.pf_code_desc,'395','');\n--XXXgo_item('PATIENT_FILE.EMP_NO');\ngo_item('booking.pf_refer_type');"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "/*if :o_surg_time is null then \n   null;\t:o_surg_time:=10;\nelse\n\t:o_sum:=nvl(:o_setup,0)+ :o_surg_time;\nend if;*/\nnull;--2025"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_item('B1.PB_SUP');"
+    },
+    {
+      "name": "ON-CHECK-DELETE-MASTER",
+      "code": "--\n-- Begin default relation declare section\n--\nDECLARE\n  Dummy_Define CHAR(1);\n  --\n  -- Begin BOOKING_ACTIVITY detail declare section\n  --\n  CURSOR BOOKING_ACTIVITY_cur IS      \n    SELECT 1 FROM booking_activity b     \n    WHERE b.BOOKING_NO = :BOOKING.BOOKING_NO;\n  --\n  -- End BOOKING_ACTIVITY detail declare section\n  --\n  --\n  -- Begin CRM detail declare section\n  --\n  CURSOR CRM_cur IS      \n    SELECT 1 FROM CRM C     \n    WHERE C.BOOKING_NO = :BOOKING.BOOKING_NO;\n  --\n  -- End CRM detail declare section\n  --\n--\n-- End default relation declare section\n--\n--\n-- Begin default relation program section\n--\nBEGIN\n  --\n  -- Begin BOOKING_ACTIVITY detail program section\n  --\n  OPEN BOOKING_ACTIVITY_cur;     \n  FETCH BOOKING_ACTIVITY_cur INTO Dummy_Define;     \n  IF ( BOOKING_ACTIVITY_cur%found ) THEN     \n    Message('Cannot delete master record when matching detail records exist.');     \n    CLOSE BOOKING_ACTIVITY_cur;     \n    RAISE Form_Trigger_Failure;     \n  END IF;\n  CLOSE BOOKING_ACTIVITY_cur;\n  --\n  -- End BOOKING_ACTIVITY detail program section\n  --\n  --\n  -- Begin CRM detail program section\n  --\n  OPEN CRM_cur;     \n  FETCH CRM_cur INTO Dummy_Define;     \n  IF ( CRM_cur%found ) THEN     \n    Message('Cannot delete master record when matching detail records exist.');     \n    CLOSE CRM_cur;     \n    RAISE Form_Trigger_Failure;     \n  END IF;\n  CLOSE CRM_cur;\n  --\n  -- End CRM detail program section\n  --\nEND;\n--\n-- End default relation program section\n--\n"
+    },
+    {
+      "name": "PRE-QUERY",
+      "code": "if :parameter.pr_booking_no is not null then\n\t:booking.booking_no :=:parameter.pr_booking_no;\nend if;"
+    },
+    {
+      "name": "PRE-INSERT",
+      "code": "check_permission('INSERT');\n:BOOKING.user_insert := :ctrl.username;\n:BOOKING.username := :ctrl.username;\n:BOOKING.date_insert := sysdate;\n:BOOKING.date_update := sysdate;\n:booking.b_type :='2';\n:BOOKING.BOOKING_NO:=LO_SESSION+100000000;\n:booking.B_BLOCK_FLAG:='T'; -- ���� ���� ���� \n:booking.SCREEN_INSERT:='AST_BOOKING'; \n-- Added By Michal Porian 12/2013\n:booking.b_date := :parameter.pr_date;\n\n \n"
+    },
+    {
+      "name": "PRE-UPDATE",
+      "code": "check_permission('UPDATE');\n:booking.username := :ctrl.username;\n:booking.date_update := sysdate;\n\n/*if :b_status = 4  then  --rachel complite\n\tupdate meetings set m_status = 4\n  where meeting_no =:parameter.pr_meeting_no;\nend if;*/\n\n"
+    },
+    {
+      "name": "KEY-NXTBLK",
+      "code": "go_block('BOOKING_ACTIVITY');\n"
+    },
+    {
+      "name": "WHEN-NEW-BLOCK-INSTANCE",
+      "code": "if :B_ID_TYPE is null then \n\t  :B_ID_TYPE:=1;\nend if;\n\n\n"
+    },
+    {
+      "name": "PRE-TEXT-ITEM",
+      "code": "lo_check_activity1;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "check_mandatory('N','N');\nnext_item;\nif FORM_SUCCESS then\n\tnext_item;\nend if;\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "clear_item;\ndeclare\n lov_id  LOV;\n x number;\nbegin\nselect count(1)\ninto x\nfrom activity a \nwhere DBF_CHK_ACTPERS(:booking.emp_no ,activity_code)=0;\n\n\t\nlov_id := Find_LOV('ACTIVITY_LOV');\n\nif x=0 then \nset_lov_property(lov_id,group_name,'rg_activity_cli');\nelse\nset_lov_property(lov_id,group_name,'rg_activity_doc');\nend if;\nend;\nnext_item;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "if :ACTIVITY_CODE is null then\nlist_values;\nprevious_item;\nelse\nnext_item;\nend if;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :ACTIVITY_CODE is not null then \nbegin\n  -- if :ACTIVITY_CODE = :parameter.DUMMY_ACTIVITY then \n  \tif dbf_get_sp_in_value('DUMMY_ACTIVITY',:ACTIVITY_CODE)= 1 then \n   \t :ba_rem:=:activity_code_desc;\n   end if;\nend;\nend if;\n\n\t"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "check_mandatory('N','N');\nnext_item;"
+    },
+    {
+      "name": "WHEN-NEW-ITEM-INSTANCE",
+      "code": "if :booking_activity.BA_QUT is null\n\tand :booking_activity.activity_code is not null then\n  :booking_activity.BA_QUT := 1;\nend if;\t"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "check_mandatory('N','N');\nnext_record;"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "if :booking_activity.activity_code is not null and :booking.B_BLOCK_FLAG is null\n\tand :booking_activity.booking_no is not null  then \n--synchronize;\n--commit_form;\ncall_screen_new('SPINCAL_STAF',\n                          --'PR_MEETING_NO',to_char(:parameter.pr_meeting_no),\n                          'PR_BOOKING_NO',to_char(:booking_activity.booking_no),\n                          --'PR_SPINCAL_TYPE',:parameter.PR_SPINCAL_TYPE,\n                          'PR_ACTIVITY',:booking_activity.activity_code,\n                           'pr_block_no',:parameter.pr_block_no);\nelse\n\terrors(1,'e');\nend if;\n"
+    },
+    {
+      "name": "KEY-UP",
+      "code": "up;\n"
+    },
+    {
+      "name": "KEY-DOWN",
+      "code": "down;"
+    },
+    {
+      "name": "PRE-INSERT",
+      "code": "check_permission('INSERT');\n:BOOKING_ACTIVITY.user_insert := :ctrl.username;\n:BOOKING_ACTIVITY.username := :ctrl.username;\n:BOOKING_ACTIVITY.date_insert := sysdate;\n:BOOKING_ACTIVITY.date_update := sysdate;\n\n\t:b1.update_act:='1';\n\n--if :parameter.DUMMY_ACTIVITY = :ACTIVITY_CODE \t then\nif dbf_get_sp_in_value('DUMMY_ACTIVITY',:ACTIVITY_CODE)= 1 then \n:ba_rem:=\t:ACTIVITY_CODE_desc;\nend if;\n\n\n\nif nvl(:BOOKING_ACTIVITY.BA_ROWNUM,0) = 0  then \n\t :BOOKING_ACTIVITY.BA_ROWNUM:=:system.trigger_record;  --add rachel  11/2016\nend if;\t \n\n:ba_type := '�';\n\n \n--message('pr_booking_no'||:parameter.pr_booking_no);\n--message('pr_block_no'||:parameter.pr_block_no);\n--message('pr_meeting_no'||:parameter.pr_meeting_no);\n--message('pr_surgery_block'||:parameter.pr_surgery_block);\t\n--message(':parameter.PR_SPINCAL_TYPE'||:parameter.PR_SPINCAL_TYPE);\n\nif :parameter.PR_SPINCAL_TYPE='room' then\n\t\n\tif \t:booking.emp_no is null then\n\t\t:booking_activity.emp_no:=0;\n\telse\n\t\tif :parameter.pr_surgery_block ='NO' then\n\t\t:booking_activity.emp_no:=\t:booking.emp_no;\n\t\tend if;\n\tend if;\n\t\n\tif :parameter.pr_surgery_block ='YES' then \n\t  :booking_activity.emp_no:=lo_find_emp_block;\n\tend if;\n\t\nelsif :parameter.PR_SPINCAL_TYPE = 'doctor' then\n\tbegin\nselect emp_no\ninto :booking_activity.emp_no\nfrom all_personal\nwhere emp_no = :booking.emp_no;\nexception \n\twhen others then null;\nend;\t\nend if;\nlo_insert_bres(:booking_activity.activity_code);\t\n"
+    },
+    {
+      "name": "PRE-UPDATE",
+      "code": "check_permission('UPDATE');\n:BOOKING_ACTIVITY.username := :ctrl.username;\n:BOOKING_ACTIVITY.date_update := sysdate;\n\nif :parameter.PR_SPINCAL_TYPE='room' and :parameter.pr_surgery_block = 'YES' then\n\t\n\tif \t:booking.emp_no is null then\n\t\t:booking_activity.emp_no:=0;\n\telse\n\t\t\t:booking_activity.emp_no:=\t:booking.emp_no;\n\tend if;\nend if;\n\n--if :parameter.DUMMY_ACTIVITY = :ACTIVITY_CODE \t then\nif dbf_get_sp_in_value('DUMMY_ACTIVITY',:ACTIVITY_CODE) =1 then \n:ba_rem:=\t:ACTIVITY_CODE_desc;\nend if;\n\t:b1.update_act:='1';\n\t\n\t\n:ba_type := '�';\n"
+    },
+    {
+      "name": "WHEN-NEW-BLOCK-INSTANCE",
+      "code": "check_mandatory('B_NAME','GO');\ncheck_mandatory('B_FIRST_NAME','GO');\n\n  if :C_CHILDREN_FLAG is not null then \n  \t check_mandatory('B_ID_TYPE','GO');  \n  \t check_mandatory('B_ID','GO');  \t\t\n  end if;\t\n  if :C_MARITAL_STATUS is not null then \n  \t check_mandatory('B_BIRTHDAY','GO');  \t\n  end if;\t\n  if :C_SEX is not null then \n  \t check_mandatory('B_SEX','GO');  \t\t\n  end if;\t\n  if :C_law_status is not null then \n  check_mandatory('CLIENT_PAYER','GO');  \t\n  end if;\t\n  if :c_cell_prefix is not null then\n  check_mandatory('B_DEPT','GO');  \t\n  end if;\t\n    if :c_law_status is not null then \n  \t  check_mandatory(\t'CLIENT_PAYER','GO');  \n  end if;\t\n"
+    },
+    {
+      "name": "POST-QUERY",
+      "code": "get_code_info('172',:patient.p_id_type,:patient.p_id_type_desc,'WARN');\n\nif :patient.p_status='�' then\n\t:patient.p_status_d:='����';\n\t--orel 16.03.16\n\t--set_item_property('patient.p_status_d',visual_attribute,'VA_CURRENT_REC');\nelse\n\t:patient.p_status_d:='����';\n\tset_item_property('patient.p_status_d',visual_attribute,'VISUAL_STATUS');\nend if;\n"
+    },
+    {
+      "name": "KEY-UP",
+      "code": "up;\n"
+    },
+    {
+      "name": "KEY-DOWN",
+      "code": "down;"
+    },
+    {
+      "name": "WHEN-NEW-RECORD-INSTANCE",
+      "code": "if :patient.p_status='�' then\n\tset_item_property('patient.p_status_d',visual_attribute,'VISUAL_STATUS');\n--orel 16.03.16\n/*else\n\tset_item_property('patient.p_status_d',visual_attribute,'VA_CURRENT_REC');*/\nend if;"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "do_key('EXIT_FORM');\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "do_key('COMMIT_FORM');\n:global.keep_going:='YES';\n\n\n\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_item('booking.b_birthday');"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_item('booking.b_birthday');\n:B_FIRST_NAME:=:PATIENT.P_FIRST_NAME;\n:B_NAME:=:PATIENT.P_LAST_NAME;\n:B_BIRTHDAY:=:PATIENT.P_BDATE;\n:b_SEX:=:PATIENT.P_SEX;\n:B_HTEL:=:PATIENT.P_HTEL;\n:B_WTEL:=:PATIENT.P_WTEL;\n:B_CELL:=:PATIENT.P_CELL;\n:BOOKING.patient_no :=:PATIENT.patient_no;\n:BOOKING.b_id_type := :PATIENT.P_id_type;\n:BOOKING.b_id := :PATIENT.P_id;\n:BOOKING.p_status := :PATIENT.P_status;\n:BOOKING.p_status_d := :PATIENT.P_status_d;\n\n\nif :BOOKING.p_status='�' then\n\t:patient.p_status_d:='����';\n\t set_item_property('booking.p_status_d',visual_attribute,'VA_DISPLAY_ITEM');\nelse\n\t:patient.p_status_d:='����';\n  set_item_property('booking.p_status_d',visual_attribute,'VISUAL_STATUS');\nend if;\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "clear_block(no_validate);\ncall_screen_new('TH_WAITLIST',\n                          'PR_MEETING_NO',to_char(:parameter.pr_meeting_no),\n                          'PR_BOOKING_NO',to_char(:parameter.pr_booking_no),\n                          'PR_SPINCAL_TYPE',:parameter.PR_SPINCAL_TYPE,\n                          'PR_block_no',:parameter.PR_block_no,\n                          'PR_surgery_block',:parameter.PR_surgery_block,\n                          'PR_SPINCAL_NO',null);\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_block('crm');"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "/*******************************************\n   Code modified by the Forms Migration Assistant\n   21-���-2025 05:32 PM\n *******************************************/\n\ndeclare\n\tl_sess_id varchar2(40);\n\tl_call_booking_no\tnumber;\nbegin \n\t\tif \t(:booking.CHECK_FAX = 'Y'  and  :B_FAXNO is not null )\n\t\t   or (:booking.CHECK_EMAIL = 'Y' and :B_EMAIL is not null) then\n\t\nif dbg_a_get_pfile_print_data.check_document_data (:booking.booking_no)  =1 then \n-- Add By Michal Porian 10/2013 -- CALL_FORM new screen in order to print booking paper\n\n:parameter.PRINTED:='Y';\n\t\tif form_success then\n\t\t\t\tBEGIN\n\t\t  \t SELECT USERENV('SESSIONID')\n\t\t   \t\tINTO   l_sess_id \n\t\t   \t\tFROM   DUAL;\n\t\t\t\tEND;\n\t\t\t\t  call_screen_new('HMC_B_PRINT','P_SESS',l_sess_id,'P_BOOKING_NO',:booking.booking_no,\n\t\t\t\t  \t'P_CB_FAX_NO',:booking.CHECK_FAX,\n\t\t\t\t  \t'P_FAX_NO',:B_FAXNO,\n\t\t\t\t  \t'P_CB_MAIL',:booking.CHECK_EMAIL,\n\t\t\t\t  \t'P_MAIL_ADDR',:B_EMAIL\n\t\t\t\t  \t);\t\t\t\t\n\t\telse\n\t\t\traise form_trigger_failure;\n\t\tend if;\t\t\t\n\n-- Michal Porian 10/2013 -- End of change\n\telse\n\t errors(10857,'e');\nend if;\nelse\n\t errors(1,'e');\nend if;\n\nend;\n\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_item('pb_back4');"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "go_block('booking');"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "get_code_info('402', :crm.C_room_type, :crm.C_room_type_d, 'ERR');"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "--pop_help('CODES', :dummy_N,  :crm.c_room_type,   :crm.c_room_type_d,  '402', '');\n :dummy_n:=402;\nlist_values;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "get_code_info('376', :crm.C_MEAL, :crm.C_MEAL_d, 'ERR');"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "--pop_help('CODES', :dummy_N,  :crm.c_meal,   :crm.c_meal_d,  '376', '');\n\n :dummy_n:=376;\nlist_values;"
+    },
+    {
+      "name": "POST-QUERY",
+      "code": "get_code_info('376', :crm.C_MEAL, :crm.C_MEAL_d, '');\nget_code_info('402', :crm.C_room_type, :crm.C_room_type_d, '');"
+    },
+    {
+      "name": "PRE-INSERT",
+      "code": "check_permission('INSERT');\n:CRM.user_insert := :ctrl.username;\n:CRM.username := :ctrl.username;\n:CRM.date_insert := sysdate;\n:CRM.date_update := sysdate;"
+    },
+    {
+      "name": "PRE-UPDATE",
+      "code": "check_permission('UPDATE');\n:CRM.username := :ctrl.username;\n:CRM.date_update := sysdate;"
+    },
+    {
+      "name": "KEY-CLRBLK",
+      "code": "--clear_form;\nclear_screen_new;"
+    },
+    {
+      "name": "ON-CLEAR-DETAILS",
+      "code": "--\n-- Begin default relation program section\n--\nBEGIN\n  Clear_All_Master_Details;\nEND;\n--\n-- End default relation program section\n--\n"
+    },
+    {
+      "name": "KEY-EXEQRY",
+      "code": "if :booking.booking_no is not null then\ngo_block('booking');\nexecute_query;\ngo_block('booking_activity'); --has aproblem \nexecute_query;  \nend if;"
+    },
+    {
+      "name": "WHEN-NEW-ITEM-INSTANCE",
+      "code": "DECLARE\n  L_TRIGGER_ITEM  ITEM;\nBEGIN\t\n  L_TRIGGER_ITEM := FIND_ITEM(:SYSTEM.TRIGGER_ITEM);\n  IF NOT ID_NULL(L_TRIGGER_ITEM)\n    AND INSTR(UPPER(GET_ITEM_PROPERTY(L_TRIGGER_ITEM,ITEM_TYPE)),'ITEM')!=0\n  THEN\n    SELECT_ALL; \n  END IF;\t\t\nEND;  \n"
+    }
+  ],
+  "program_units": [
+    {
+      "name": "L_GET_CLIENT_INFO",
+      "type": "Procedure",
+      "code": "Procedure L_GET_CLIENT_INFO (IN_CLIENT     IN     number, \n                             NAME          IN OUT VARCHAR2, \n                             ERR_HANDLING  IN     VARCHAR2 ) is\nERR_HAND VARCHAR2(1);\n\nCursor GET_CLIENT is \n   select c_name\n   from CLIENT c,--- USER_CLIENT uc,\n    all_PERSONAL p\n   ---where (c.client_no in (select c2.client_no\n                       --  from CLIENT c2\n                      ---   where c_area = uc_area\n                       --  and (c_center_no = uc_center_no or uc_center_no is null)\n                       --  and (c2.client_no = uc.client_no or uc.client_no is null))) --or \n       --  (:patient_file.query = 'Y' and :patient_file.client_no = :client_special))\n  --- and uc.emp_no = p.emp_no                           \n   where  p.p_username = :ctrl.username  \n   and c.client_no = IN_CLIENT\n   and c_type = 81\n   and c_status = '�'\n   and exists (select '1' from CODES\n               where tab_no = 42\n               and code is not null\n               and code = c_direct_code\n               and hard_code_yn is not null);\n   \n----------------------\nBegin\n  If IN_CLIENT is null then\n    NAME  :=  '';\n  Else\n    Open GET_CLIENT;\n    Fetch GET_CLIENT into NAME ;\n    if (GET_CLIENT%NOTFOUND) then\n    \tERR_HAND  :=  lower(substr(ERR_HANDLING, 1, 1));\n      errors(93, ERR_HAND);\n    end if;\n    Close GET_CLIENT;\n  End if;\nEnd;\n"
+    },
+    {
+      "name": "CHECK_PACKAGE_FAILURE",
+      "type": "Procedure",
+      "code": "Procedure Check_Package_Failure IS\nBEGIN\n  IF NOT ( Form_Success ) THEN\n    RAISE Form_Trigger_Failure;\n  END IF;\nEND;"
+    },
+    {
+      "name": "QUERY_MASTER_DETAILS",
+      "type": "Procedure",
+      "code": "PROCEDURE Query_Master_Details(rel_id Relation,detail VARCHAR2) IS\n  oldmsg VARCHAR2(2);  -- Old Message Level Setting\n  reldef VARCHAR2(5);  -- Relation Deferred Setting\nBEGIN\n  --\n  -- Initialize Local Variable(s)\n  --\n  reldef := Get_Relation_Property(rel_id, DEFERRED_COORDINATION);\n  oldmsg := :System.Message_Level;\n  --\n  -- If NOT Deferred, Goto detail and execute the query.\n  --\n  IF reldef = 'FALSE' THEN\n    Go_Block(detail);\n    Check_Package_Failure;\n    :System.Message_Level := '10';\n    Execute_Query;\n    :System.Message_Level := oldmsg;\n  ELSE\n    --\n    -- Relation is deferred, mark the detail block as un-coordinated\n    --\n    Set_Block_Property(detail, COORDINATION_STATUS, NON_COORDINATED);\n  END IF;\n\nEXCEPTION\n    WHEN Form_Trigger_Failure THEN\n      :System.Message_Level := oldmsg;\n      RAISE;\nEND Query_Master_Details;\n"
+    },
+    {
+      "name": "LO_CHECK_ID_NO",
+      "type": "Procedure",
+      "code": "Procedure LO_CHECK_ID_NO  (IN_ID  in out number, \n                           IN_ERR in char) is\n  L_RET number;\nBegin\n  :dummy_N := -1;\n  L_RET := asf_sifrat_bikoret(IN_ID,:dummy_N);\n  if L_RET < 0 then\n    errors(2064,IN_ERR);\n  end if;\nEnd;"
+    },
+    {
+      "name": "CHECK_PERS_ACTIVITY",
+      "type": "Procedure",
+      "code": "PROCEDURE CHECK_PERS_ACTIVITY (IN_EMP_NO    IN  number,\n                               IN_ACTIVITY  IN varchar2,\n                               OUT_ANSWER   IN OUT BOOLEAN )IS\n   cursor C1 is\n   select activity_code\n   from PERS_ACTIVITY\n   where emp_no = IN_EMP_NO;\n   p_act_code    varchar2(20);\nBEGIN\n  OUT_ANSWER := FALSE;\n  open C1;\n  Loop\n    Fetch C1 into p_act_code;\n    if C1%ROWCOUNT = 0 then\n      OUT_ANSWER := TRUE;\n    end if;\n    if C1%NOTFOUND then\n      exit;\n    elsif p_act_code = IN_ACTIVITY then\n      OUT_ANSWER := TRUE;\n    end if;\n  End Loop;\n  close C1;\nEND;"
+    },
+    {
+      "name": "START_FORM",
+      "type": "Procedure",
+      "code": "PROCEDURE start_form IS\n  p_name varchar2(80);\n  cursor C1  is\n  select param_value\n  from SPECIAL_PARAMS\n  where upper(param_name) = p_name;\n  cursor C2 is\n    select '1'\n  from CODES\n  where tab_no = 172\n  and code = :booking.b_id_type;\n        check_val   varchar2(20);\nBEGIN\n\t\n\tINIT_RG_CODES (172, 'booking.b_id_type');\n\n\n  open C1;\n  Fetch C1 into :booking.b_id_type;\n  close C1;\n  if  :booking.b_id_type is not null then\n    open C2;\n    Fetch C2 into check_val;\n    if C2%NOTFOUND then\n    \t :booking.b_id_type := null;\n    end if;\n    close C2;\n  end if;\n\nEND;"
+    },
+    {
+      "name": "LO_ALERT_A_MAXQUT",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_alert_a_maxqut IS\n button number;\n mess varchar2(1000);\nbegin\n    mess := '���� ������ �� ������ ������ ���� �������, ��� ������?';\n    set_alert_property('AL_NOTE_2',alert_message_text,mess);\n    button:=show_alert('AL_NOTE_2');\n    if button=alert_button2 then\n    \t:booking_activity.ba_qut := 1;\n      raise form_trigger_failure;\n    end if;\nend;"
+    },
+    {
+      "name": "LO_UPDATE_USEDTIME",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_update_usedtime IS\nl_block_no number;\nBEGIN\n  select a.m_block_no\n  into l_block_no\n  from meetings a\n  where a.m_isblock =0\n  and a.meeting_no = :parameter.pr_meeting_no\n  and exists(select 1 from meetings b \n                      where b.m_isblock = 8  \n                       and b.m_block_no =0 \n                       and b.meeting_no =a.meeting_no);\n                       \n                       \n  if l_block_no is not null then \n                         \n  update meetings\n  set m_usedtime = (select sum(m_duration) from meetings where m_block_no = l_block_no)\n  where meeting_no =l_block_no\n  and m_isblock = 8  and m_block_no =0;\n  \n  end if;\n                        \n   \nEND;"
+    },
+    {
+      "name": "LO_SESSION",
+      "type": "Function",
+      "code": "FUNCTION LO_SESSION RETURN NUMBER IS\n L_SESH VARCHAR2(20);\nBEGIN\n   SELECT USERENV('SESSIONID')\n   INTO   L_SESH \n   FROM   DUAL;\n   --message(l_sesh ||  'this is the session'); message(l_sesh ||  'this is the session');\n  RETURN(TO_NUMBER(L_SESH));  \nEND;\n\n"
+    },
+    {
+      "name": "LO_GET_PARAMS",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_get_params IS\nv_parameter varchar2(30);\ncursor C1 is\n  select param_value\n  from SPECIAL_PARAMS\n  where param_name = v_parameter;  \nBEGIN\n    v_parameter := 'SPINCAL_BRES_FLAG';\n  open C1;\n  fetch C1 into :parameter.SPINCAL_BRES_FLAG;\n  close C1;\n  \n  \n    v_parameter := 'DUMMY_ACTIVITY';\n  open C1;\n  fetch C1 into :parameter.DUMMY_ACTIVITY;\n  close C1;\n  \n   v_parameter := 'CRM_UPDATE';\n  open C1;\n  fetch C1 into :parameter.CRM_UPDATE;\n  close C1;\n  \n  v_parameter := 'SMS_REMAINDER';\n  open C1;\n  fetch C1 into :parameter.SMS_REMAINDER;\n  close C1;\n  \n    if nvl(:parameter.CRM_UPDATE,'0') = '0' then \n  \tset_item_property('TELME_REMAINDER_FLAG', visible, property_false);\n  end if;\n  \n  \n  if nvl(:parameter.CRM_UPDATE,'N') = 'N' then \n  \tset_block_property('CRM', update_allowed, property_false);\n  end if;\nEND;\n\n"
+    },
+    {
+      "name": "CHECK_DUPLICATED_ITEMS",
+      "type": "Procedure",
+      "code": "PROCEDURE check_duplicated_items IS\n  v_row_num number;\nBEGIN \n  go_block('BOOKING_ACTIVITY');\n  first_record;\n  loop\n    v_row_num := to_number(:system.cursor_record);\n    if :system.last_record='TRUE' then\n      exit;\n    else\n      check_record(:booking_activity.activity_code,v_row_num);         \n      go_record(v_row_num + 1);\n    end if;  \n  end loop;\nEND;"
+    },
+    {
+      "name": "CHECK_RECORD",
+      "type": "Procedure",
+      "code": "PROCEDURE check_record (p_kod in varchar2,\n                        p_row in number) IS\n                        \n                \n \nBEGIN \n go_record(p_row+1);\n loop\n\t\n if (:booking_activity.activity_code=p_kod ) then \n \t   errors(728,'e'); \n else  \n \t  if :system.last_record='TRUE' then\n       exit;\n    else\n      next_record;\n    end if;\n end if;\n end loop;\nEND;"
+    },
+    {
+      "name": "LO_CHECK_BRES_NEW",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_check_bres_new IS\n x number;\n L_AL_BUT number;\nBEGIN\n\t  x:=lo_check_bres;\n\t  if x<0 then \n   \tset_alert_property('AL_NOTE_3A',alert_message_text,'��� ������ ������ ? ');\n    L_AL_BUT  := show_alert('AL_NOTE_3A');\n    if L_AL_BUT = alert_button2  then  \n    \tnull; \n    elsif L_AL_BUT = alert_button1  then   \n    \tlo_check_bres_new;\n    elsif L_AL_BUT = alert_button3  then  \n    \traise form_trigger_failure;\n    end if;\n    end if;\nEND;"
+    },
+    {
+      "name": "SET_PROPERTIES",
+      "type": "Procedure",
+      "code": " PROCEDURE set_properties (IN_FIELD     IN VARCHAR2,\n                          IN_PROPERTY  IN VARCHAR2) IS\nBEGIN\n  if IN_PROPERTY = 'TRUE' then\n  \tset_item_property(IN_FIELD,enabled,property_true);\n\t  set_item_property(IN_FIELD,navigable,property_true);\n\t  set_item_property(IN_FIELD,insert_allowed,property_true);\n\t  set_item_property(IN_FIELD,update_allowed,property_true);\n  else\n  \tset_item_property(IN_FIELD,enabled,property_false);\n  end if;\nEND;\n"
+    },
+    {
+      "name": "GET_REFER",
+      "type": "Procedure",
+      "code": "PROCEDURE get_refer (ERR_HANDLING  IN  varchar2)IS\n         cursor C1 is\n\t\tselect c_name\n    From CLIENT\n    where c_type = 82\n    and   c_status = '�'\n    and   client_no = :booking.pf_refer_code;\n    \n         cursor C2 is\n    select s_name\n    from SUPPLIERS\n    where s_type = '�'\n    and supplier_no = :booking.pf_refer_code;\n    \n         cursor C3 is\n    select p_name || ' ' || p_first_name \n    from ALL_PERSONAL\n    where nvl(p_status,'�') in ('�','�')\n    and emp_no = :booking.pf_refer_code;\n    \n        cursor C4_0 is\n    select code,code_desc \n    from CODES\n    where tab_no = 386 and code is not null\n    and exists (select '1' from codes_connect_lines\n                where connect_no = 108\n                and code = ccl_code1\n                and ccl_code2 = :booking.pf_refer_code);\n\n    \n         cursor C4 is\n    select code_desc \n    from CODES \n    where tab_no = 177 and code is not null \n    and exists (select '1' from codes_connect_lines \n                where connect_no = 108 \n                and ccl_code2 = code \n                and ccl_code1 = :booking.refer_code)\n    and code = :booking.pf_refer_code; \n    \n         cursor C5 is\n    select code_desc \n    from CODES \n    where tab_no = 177 and code is not null \n    and exists (select '1' from codes_connect_lines \n                where connect_no = 107 \n                and ccl_code2 = code \n                and ccl_code1 = :booking.pf_refer_type)\n    and code = :booking.pf_refer_code;\n    \n    dummy_c     varchar2(80);\n    dummy_n     number(38);\n    dummy_d     date;\n    first_name  varchar2(80);\n    last_name   varchar2(80);\n    ERR_HAND    varchar2(2);\nBEGIN\n\tERR_HAND  :=  lower(substr(ERR_HANDLING, 1, 1));\n\tif :booking.pf_refer_type = '1' then\n\t\topen C1;\n\t\tFetch C1 into :booking.pf_refer_desc;\n\t\tif C1%NOTFOUND then\n\t\t\terrors(644,ERR_HAND);\n\t\tend if;\n\t\tclose C1;\n\telsif :booking.pf_refer_type = '2' then\n\t\topen C2;\n\t\tFetch C2 into :booking.pf_refer_desc;\n\t\tif C2%NOTFOUND then\n\t\t\terrors(1215,ERR_HAND);\n\t\tend if;\n\t\tclose C2;\t\t\n\telsif :booking.pf_refer_type = '3' then\n\t\topen C3;\n\t\tFetch C3 into :booking.pf_refer_desc;\n\t\tif C3%NOTFOUND then\n\t\t\terrors(2094,ERR_HAND);\n\t\tend if;\n\t\tclose C3;\t\n\telsif :booking.pf_refer_type = '4' then\n\t  if :booking.refer_code is null and :booking.pf_refer_code is not null then\n\t  \topen C4_0;\n\t  \tFetch C4_0 into :booking.refer_code,:booking.refer_desc;\n\t  \tif C4_0%NOTFOUND then\n\t  \t\terrors(3714,'ERR_HAND');\n\t  \tend if;\n\t  \tclose C4_0;\n\t  end if;\t\t\n\t\topen C4;\n\t\tFetch C4 into :booking.pf_refer_desc;\n\t\tif C4%NOTFOUND then\n\t\t\terrors(3715,ERR_HAND);\n\t\tend if;\n\t\tclose C4;\t\t\n\telsif :booking.pf_refer_type = '6' then\n\t\tget_patient_data (:booking.pf_refer_code,dummy_c,\n\t                    dummy_c,last_name,first_name,dummy_c,dummy_d,dummy_c,\n\t \t                  dummy_c,dummy_c,dummy_c,dummy_c,dummy_n,dummy_c,\n\t                    dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_d,\n\t                    dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,dummy_c,ERR_HAND);\n\t                     \n\t  :booking.pf_refer_desc := first_name || ' ' || last_name;                 \n  else -- rachel --if :booking.pf_refer_type = '5' then\n\t\topen C5;\n  \tFetch C5 into :booking.pf_refer_desc;\n\t\tif C5%NOTFOUND and get_item_property('booking.PF_REFER_CODE',visual_attribute) not like '%RED%' then\n\t\t\terrors(490,ERR_HAND);\n\t\tend if;\n\t\tclose C5;\t\t\n  end if;\nEND;"
+    },
+    {
+      "name": "GET_PATIENT_DATA",
+      "type": "Procedure",
+      "code": "PROCEDURE get_patient_data (IN_PATIENT      IN number,\n                            OUT_ID_TYPE     IN OUT varchar2,\n                            OUT_ID          IN OUT varchar2,\n                            OUT_NAME        IN OUT varchar2,\n                            OUT_FIRST_NAME  IN OUT varchar2,\n                            OUT_FATHER_NAME IN OUT varchar2,\n                            OUT_BDATE       IN OUT date,\n                            OUT_SEX         IN OUT varchar2,\n                            OUT_HTEL        IN OUT varchar2,\n                            OUT_WTEL        IN OUT varchar,\n                            OUT_CELL        IN OUT varchar2,\n                            OUT_STATE       IN OUT varchar2,\n                            OUT_CITY_NO     IN OUT number,                           \n                            OUT_CITY_NAME   IN OUT varchar2,\n                            OUT_STREET      IN OUT varchar2,\n                            OUT_STREETNO    IN OUT varchar2,\n                            OUT_ZIP         IN OUT varchar2,\n                            OUT_P_CARD      IN OUT varchar2,\n                            OUT_P_STATUS    IN OUT varchar2,\n                            OUT_P_ACC       IN OUT varchar2,\n                            OUT_P_REM       IN OUT varchar2,\n                            OUT_DATE_INSERT IN OUT DATE,\n                            OUT_P_REASON    IN OUT varchar2, \n                            OUT_P_SICK_FUND IN OUT varchar2,\n                            OUT_P_FUND_CARD IN OUT varchar2,\n                            OUT_INSUR_FLAG  IN OUT varchar2,\n                            OUT_INSUR_CODE  IN OUT varchar2, \n                            OUT_OPER_CODE   IN OUT varchar2,\n                            OUT_VAT         IN OUT varchar2,\n                            OUT_INCL_NOW    IN OUT varchar2,\n                            ERR_HANDLING    IN     varchar2) IS\n  cursor C1 is\n  select p_id_type,p_id,p_last_name,p_first_name,p_father_name,p_bdate,\n         p_sex,p_htel,p_wtel,dbg_sms.clean_cellnumber(p_cell) p_cell,\n         p_state,city_no,p_city_name,p_street,p_streetno,p_zip,p_credit_card,p_status,\n         p_acc_code,p_remark,date_insert,p_reason,p_sick_fund,p_fund_card,\n         p_insurance_flag,p_insurance_code,p_oper_code,p_vat,p_incl_now\n  from PATIENT\n  where patient_no = IN_PATIENT;\n\n  ERR_HAND VARCHAR2(1);\n  dummy_d    date;\nBEGIN\n\t\n\tERR_HAND  :=  lower(substr(ERR_HANDLING, 1, 1));\n\n  open C1;\n  Fetch C1 into OUT_ID_TYPE,OUT_ID,OUT_NAME,OUT_FIRST_NAME,OUT_FATHER_NAME,OUT_BDATE,\n                OUT_SEX,\n                OUT_HTEL,OUT_WTEL,OUT_CELL,OUT_STATE,OUT_CITY_NO,OUT_CITY_NAME,\n                OUT_STREET,OUT_STREETNO,OUT_ZIP,OUT_P_CARD,OUT_P_STATUS,OUT_P_ACC,OUT_P_REM,\n                OUT_DATE_INSERT,OUT_P_REASON,OUT_P_SICK_FUND,OUT_P_FUND_CARD,\n                OUT_INSUR_FLAG,OUT_INSUR_CODE,OUT_OPER_CODE,OUT_VAT,OUT_INCL_NOW;\n                 \n  \n  if C1%NOTFOUND then\n  \tif ERR_HAND != 'n' then\n      errors(3716,ERR_HAND);\n    end if;\n  end if;\n  close C1;\nEND;"
+    },
+    {
+      "name": "SET_PROP",
+      "type": "Procedure",
+      "code": "PROCEDURE set_prop IS\nBEGIN\n\n\n  if :booking.pf_refer_type is not null then\n  \tset_properties('booking.PF_REFER_CODE','TRUE');\n\t\tset_properties('booking.PF_REFER_DESC','TRUE');\n\t\tset_item_property('booking.PF_REFER_CODE',visual_attribute,'VA_ITEM_MANDATORY');\n\n\t  --if :booking.pf_refer_type in ('1','2','3','5','6') then rachel\n\t  if :booking.pf_refer_type not in ('4') then\n\t\t  set_item_property('booking.REFER_CODE',visible,property_false);\n\t\t  set_item_property('booking.REFER_DESC',visible,property_false);\n\t\t  set_item_property('booking.REFER_CODE_LOV',visible,property_false);\n\n\t    if :booking.pf_refer_type = '1' then      -- ����\n        set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE1');\n\t    elsif :booking.pf_refer_type = '2' then   -- ���\n        set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE2');\n      elsif :booking.pf_refer_type = '3' then   -- ������\n        set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE3');\n      elsif :booking.pf_refer_type = '6' then  -- �����\n    \t  set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE6');\n    \telse --if :booking.pf_refer_type = '5' then --rachel\n    \t  set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE5');\n      end if;\n    else  -- ���� �����\n      set_item_property('booking.REFER_CODE',visible,property_true);\n      set_properties('booking.REFER_CODE','TRUE');\n    \tset_item_property('booking.REFER_DESC',visible,property_true);\n\t\t  set_item_property('booking.REFER_CODE_LOV',visible,property_true);\n\t\t  set_item_property('booking.REFER_CODE_LOV',enabled,property_true);\n\t\t  set_item_property('booking.REFER_CODE',visual_attribute,'VA_ITEM_MANDATORY');\n      if :booking.refer_code is not null then\n        get_code_info('386',:booking.refer_code,:booking.refer_desc,'WARN');\n      end if;\t\t\n\t\t  set_item_property('booking.PF_REFER_DESC',lov_name,'LOV_REFER_CODE4');\t\n    end if;\n  else\n\t  set_properties('booking.PF_REFER_CODE','FALSE');\n\t  set_properties('booking.PF_REFER_DESC','FALSE');\n    set_item_property('booking.PF_REFER_CODE',visual_attribute,'VA_ITEM');\n  \n    set_item_property('booking.REFER_CODE',visible,property_false);\n\t  set_item_property('booking.REFER_DESC',visible,property_false);\n\t  set_item_property('booking.REFER_CODE_LOV',visible,property_false);\n  end if;\n\nEND;"
+    },
+    {
+      "name": "LO_GET_ORDER_DETAILS",
+      "type": "Function",
+      "code": "FUNCTION lo_get_order_details RETURN varchar2 IS\nv_activity_code\tbooking_activity.activity_code%type;\nCURSOR Activities IS\n\t\tselect a.activity_code\n    from booking_activity ba, ACTIVITY a\n      where ba.activity_code = :BOOKING_ACTIVITY.activity_code\n        and a.a_type =   '1'; -- ������ �������\n\nBEGIN\n\t\n\tgo_block('BOOKING_ACTIVITY');\n\tfirst_record;\t\n\t\n\tBEGIN\n\tselect a.activity_code\n\t\tINTO v_activity_code\n    from ACTIVITY a\n    where a.activity_code = :BOOKING_ACTIVITY.activity_code\n    and a.a_type =   '1'; -- ������ �������\n\tEXCEPTION\n\t\tWHEN NO_DATA_FOUND THEN\n\t\t\tv_activity_code := null;\n\t\t\tnext_record;\t\t\t\n\tEND;  \n\t\n\treturn v_activity_code;\t\nEND;"
+    },
+    {
+      "name": "LO_DEL_BOOKING_RESOURCES",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_del_booking_resources IS\n\ncursor c1 is\nselect BOOKING_NO,ACTIVITY_CODE,BR_RESOURCE_TYPE,BR_REQUIRED\nfrom booking_resource\nwhere booking_no = :booking.booking_no\nand activity_code = :booking_activity.activity_code;\n\nx number;\n\nBEGIN\n\t\n select count(*)\n into x\n from  booking_resource\n where booking_no = :booking.booking_no\n  and activity_code = :booking_activity.activity_code\n  and BR_RESOURCE_TYPE ='M'\n  and BR_REQUIRED ='Y';\n  \n  if x = 0 then\n    begin\n    \tupdate \tbooking_resource \n    \tset BR_REQUIRED = null\n     where booking_no = :booking.booking_no\n     and activity_code = :booking_activity.activity_code;\n     \n     local_commit;\n    exception\n    \t when others then null;\n    end;\n  end if;\n  \nEND;"
+    },
+    {
+      "name": "LO_CHECK_EXIT",
+      "type": "Procedure",
+      "code": "PROCEDURE lo_check_exit  IS\n x number;\n L_AL_BUT number;\n l_old_booking number;\nBEGIN\n\t  x:=lo_check_bres;\n\t  if x<0 then \n   \tset_alert_property('AL_NOTE_3A',alert_message_text,'��� ���� ��� ����� ? ');\n    L_AL_BUT  := show_alert('AL_NOTE_3A');\n    if L_AL_BUT = alert_button2  then  \n    \tl_old_booking:=:booking.booking_no;\t\n       begin\n         delete booking_activity where booking_no = l_old_booking;\n         delete booking_resource where booking_no = l_old_booking;\n         delete booking where booking_no = l_old_booking;\n        local_commit;\t\n       exception\n\t       when others then\n\t          message('error'||sqlerrm);\n       end;\n    elsif L_AL_BUT = alert_button1  then   \n    \tlo_check_exit;\n    elsif L_AL_BUT = alert_button3  then  \n    \traise form_trigger_failure;\n    end if;\n    end if;\nEND;\n"
+    }
+  ],
+  "sql_clauses": [
+    {
+      "block": "BOOKING",
+      "where_clause": "b_type = 2 and booking_no =:parameter.pr_booking_no",
+      "order_by": null
+    },
+    {
+      "block": "BOOKING_ACTIVITY",
+      "where_clause": "booking_no =:booking.booking_no",
+      "order_by": "ba_rownum"
+    },
+    {
+      "block": "PATIENT",
+      "where_clause": "P_HTEL = :B_HTEL or \nP_WTEL = :B_WTEL or\nP_cell = :P_cell or \np_id = :b_id",
+      "order_by": "P_LAST_NAME"
+    }
+  ],
+  "summary": {
+    "total_triggers": 102,
+    "total_program_units": 20,
+    "total_sql_clauses": 3
+  }
+}

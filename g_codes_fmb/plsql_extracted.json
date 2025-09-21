@@ -1,0 +1,149 @@
+{
+  "triggers": [
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "select code_desc\ninto  :tab_desc\nfrom   CODES\nwhere  tab_no=:header.tab_no\nand    code is null;\n--and tab_no != '410';       04/03/2015    rimma\nexception when no_data_found then errors(12, 'e');\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "-- 14.02.2021 Galya\n--do_key('execute_query');\nnext_item;\n-- 14.02.2021 Galya\n"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "CLEAR_ITEM;\nNEXT_ITEM;\n\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "next_item;\nif form_success then\n\tnext_item;\nend if;"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "IF :header.code IS NOT NULL THEN\n\tdeclare \n\t\tcursor C1 is\n\t\tselect code_desc\n\t\tfrom   codes \n\t\twhere  tab_no = :header.tab_no\n\t\tand    code = :header.code;\n\tbegin\n\t\topen  C1;\n\t\tfetch C1 into :header.c_desc ;\n\t\tif C1%NOTFOUND then\n      :header.code   := null;\n      :header.c_desc := null;\n\t\t\terrors(1612,'e');\n\t\tend if;\n\t\tclose C1;\n\tend;\nELSE\n  :header.c_desc := null;\nEND IF;"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "do_key('list_values');"
+    },
+    {
+      "name": "KEY-LISTVAL",
+      "code": "list_values;\n--next_item;\ndo_key('execute_query');\n"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "do_key('print');"
+    },
+    {
+      "name": "WHEN-BUTTON-PRESSED",
+      "code": "do_key('execute_query');"
+    },
+    {
+      "name": "KEY-EXEQRY",
+      "code": "if :header.tab_no is null then\n  errors(184, 'e');\nend if;\ndeclare cursor C1 is\n    select '1'\n    from CODE_TRANSLATE\n    where tab_no = :header.tab_no;\n    check_tab VARCHAR2(1);\n    L_AL_BUT     NUMBER;\nbegin\n  open C1;\n  Fetch C1 into check_tab;\n  if C1%FOUND then\n   /* set_alert_property('AL_NOTE_1',alert_message_text,\n     '���� �� ��� �����,���� �� ������ �����.\n              ����� ���� ���� ����� ����� ��');*/\n     set_alert_property('AL_NOTE_1',alert_message_text,\n     '��� ��, ����� �� �� ������ ����� ���� �����');         \n      L_AL_BUT  := show_alert('AL_NOTE_1');\n   /*  set_block_property('CODES',INSERT_ALLOWED,PROPERTY_FALSE);\n     set_block_property('CODES',UPDATE_ALLOWED,PROPERTY_FALSE);\n     set_block_property('CODES',DELETE_ALLOWED,PROPERTY_FALSE);\n  else\n     set_block_property('CODES',INSERT_ALLOWED,PROPERTY_TRUE);\n     set_block_property('CODES',UPDATE_ALLOWED,PROPERTY_TRUE);\n     set_block_property('CODES',DELETE_ALLOWED,PROPERTY_TRUE);*/\n  end if;\n  close C1;\nend;\nnext_block;\nif form_success then\n  execute_query;\nend if;\n"
+    },
+    {
+      "name": "WHEN-VALIDATE-ITEM",
+      "code": "if :hard_code_yn is not null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_FALSE);\nelsif :hard_code_yn is null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_TRUE);\nend if;\n"
+    },
+    {
+      "name": "KEY-NEXT-ITEM",
+      "code": "PROC_KEY_TEXT;\nnext_record;\n---------\nif :hard_code_yn is not null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_FALSE);\nelsif :hard_code_yn is null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_TRUE);\nend if;\n"
+    },
+    {
+      "name": "WHEN-NEW-BLOCK-INSTANCE",
+      "code": "if :header.tab_no is null then\n   go_item('HEADER.TAB_NO');\nend if;"
+    },
+    {
+      "name": "KEY-DELREC",
+      "code": "PROC_KEY_TEXT;\ncheck_permission('DELETE');\nif :codes.hard_code_yn is not null then\n  errors(1, 'e');\nelse delete_record;\nend if;\n"
+    },
+    {
+      "name": "PRE-INSERT",
+      "code": "check_permission('INSERT');\n-- 12.10.2020 Galya\n:codes.user_insert := :ctrl.username;\n:codes.date_insert := sysdate;\n:codes.username    := :ctrl.username;\n:codes.date_update := sysdate;\n-- 12.10.2020 Galya\n"
+    },
+    {
+      "name": "PRE-UPDATE",
+      "code": "check_permission('UPDATE');\n-- 12.10.2020 Galya\n:codes.username    := :ctrl.username;\n:codes.date_update := sysdate;\n-- 12.10.2020 Galya\n"
+    },
+    {
+      "name": "KEY-DOWN",
+      "code": "PROC_KEY_TEXT;\nnext_record;\n-------------\nif :hard_code_yn is not null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_FALSE);\nelsif :hard_code_yn is null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_TRUE);\nend if;\n-----------\n"
+    },
+    {
+      "name": "KEY-SCRDOWN",
+      "code": "PROC_KEY_TEXT;\nscroll_down;\n"
+    },
+    {
+      "name": "KEY-SCRUP",
+      "code": "PROC_KEY_TEXT;\nscroll_up;\n"
+    },
+    {
+      "name": "KEY-CLRREC",
+      "code": "PROC_KEY_TEXT;\nclear_record;\n"
+    },
+    {
+      "name": "KEY-CREREC",
+      "code": "PROC_KEY_TEXT;\ncreate_record;\n"
+    },
+    {
+      "name": "KEY-NXTREC",
+      "code": "PROC_KEY_TEXT;\nnext_record;\n"
+    },
+    {
+      "name": "KEY-PRVBLK",
+      "code": "PROC_KEY_TEXT;\nprevious_block;\n"
+    },
+    {
+      "name": "KEY-PRVREC",
+      "code": "PROC_KEY_TEXT;\nprevious_record;\n"
+    },
+    {
+      "name": "KEY-UP",
+      "code": "PROC_KEY_TEXT;\nif :hard_code_yn is not null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_FALSE);\nelsif :hard_code_yn is null then\n  SET_ITEM_PROPERTY ('codes.code', updateable,PROPERTY_TRUE);\nend if;\n------------\nprevious_record;\n"
+    },
+    {
+      "name": "KEY-ENTQRY",
+      "code": "enter_query;"
+    },
+    {
+      "name": "KEY-EXEQRY",
+      "code": "execute_query;"
+    },
+    {
+      "name": "KEY-CLRBLK",
+      "code": "clear_record; go_block ('CODES'); clear_block (NO_VALIDATE);\ngo_block ('HEADER'); clear_record;\n"
+    },
+    {
+      "name": "KEY-COMMIT",
+      "code": "commit_form;\n"
+    },
+    {
+      "name": "KEY-EXIT",
+      "code": "exit_form;\n"
+    },
+    {
+      "name": "KEY-PRINT",
+      "code": "Declare go_print varchar2(100);\n        report varchar2(20);\nBegin\n  get_report_name.get_report(name_in('system.current_form'),report);\n  if report = 'NONE' then\n      report := 'codes';\n  end if;\n  go_print  :=  nvl(:header.tab_no, '1')||' '||nvl(:header.tab_no, '999')||' 2';\n  print_report('REGULAR', report, :ctrl.username, go_print);\nEnd;"
+    },
+    {
+      "name": "WHEN-NEW-FORM-INSTANCE",
+      "code": "startup_default;\nstartup_default_com;\nshow_view('page2');\n"
+    }
+  ],
+  "program_units": [],
+  "sql_clauses": [
+    {
+      "block": "CODES",
+      "where_clause": "where tab_no=:header.tab_no  and code is not null\nand (code = :header.code or :header.code is null)",
+      "order_by": "order by lpad(code,4,'0')"
+    }
+  ],
+  "summary": {
+    "total_triggers": 33,
+    "total_program_units": 0,
+    "total_sql_clauses": 1
+  }
+}
